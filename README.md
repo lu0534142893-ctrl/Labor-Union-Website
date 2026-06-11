@@ -4521,97 +4521,52 @@
             </div>
         </h2>
 
-<div class="letters-grid">       
+    <div class="letters-grid">       
     
     <div class="letter-card">
         <div class="letter-card-preview">
             <img src="https://i.ibb.co/SXYprfZ1/Recovered-12.jpg" alt="קונטרס 1">
         </div>
-        <h3 class="letter-card-title">קונטרס לאור עולם-חנוכה תשפ״ה</h3>
-        <a href="https://heyzine.com/flip-book/f4854af6d3.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
+           <h3 class="letter-card-title">קונטרס לאור עולם-חנוכה תשפ״ה</h3>
+             <a href="https://heyzine.com/flip-book/f4854af6d3.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
     </div>
 
     <div class="letter-card">
         <div class="letter-card-preview">
             <img src="https://i.ibb.co/SXYprfZ1/Recovered-12.jpg" alt="קונטרס 2">
         </div>
-        <h3 class="letter-card-title">קונטרס בעמלה של תורה חלק א׳  </h3>
-        <a href="https://heyzine.com/flip-book/8703946286.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
+             <h3 class="letter-card-title">קונטרס בעמלה של תורה חלק א׳  </h3>
+             <a href="https://heyzine.com/flip-book/8703946286.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
     </div>
 
     <div class="letter-card">
         <div class="letter-card-preview">
             <img src="https://i.ibb.co/SXYprfZ1/Recovered-12.jpg" alt="קונטרס 5">
         </div>
-        <h3 class="letter-card-title">קונטרס בעמלה של תורה חלק ב׳ </h3>
-        <a href="https://heyzine.com/flip-book/0ce2636f4b.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
+             <h3 class="letter-card-title">קונטרס בעמלה של תורה חלק ב׳ </h3>
+             <a href="https://heyzine.com/flip-book/0ce2636f4b.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
     </div>
-
 
     <div class="letter-card">
         <div class="letter-card-preview">
             <img src="https://i.ibb.co/SXYprfZ1/Recovered-12.jpg" alt="קונטרס 3">
         </div>
-        <h3 class="letter-card-title">קונטרס ויגבה ליבו</h3>
-        <a href="https://heyzine.com/flip-book/e8a2d19f19.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
+             <h3 class="letter-card-title">קונטרס ויגבה ליבו</h3>
+             <a href="https://heyzine.com/flip-book/e8a2d19f19.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
     </div>
 
     <div class="letter-card">
         <div class="letter-card-preview">
             <img src="https://i.ibb.co/SXYprfZ1/Recovered-12.jpg" alt="קונטרס 4">
         </div>
-        <h3 class="letter-card-title">קונטרס רוח אחרת </h3>
-        <a href="https://heyzine.com/flip-book/190164c958.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
+             <h3 class="letter-card-title">קונטרס רוח אחרת </h3>
+             <a href="https://heyzine.com/flip-book/190164c958.html" target="_blank" class="letter-card-view" style="display: block; margin-top: 10px; background: #c5a059; color: white; padding: 10px; text-decoration: none; border-radius: 5px; text-align: center;">לדפדוף בקונטרס</a>
+    </div>
+    </div>
     </div>
 
-</div>
 
-
-    <div id="articles-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
-            <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
-                <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
-                <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
-                <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #8B7355, #B8860B);"></div>
-            </div>כתבות<div style="display: inline-block; vertical-align: middle; margin-left: 0px;">
-                <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
-                <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #8B7355, #B8860B); margin-bottom: 3px;"></div>
-                <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #D4AF37);"></div>
-            </div>
-        </h2>
-        <div class="page-content">
-            <p>כתבות ומאמרים על פעילות איגוד עמלים ובני התורה יוצאי אתיופיה</p>
-        </div>
-        
-        <div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-            <h2 style="color: #D4AF37; font-size: 36px; font-weight: 900; text-align: center; margin-bottom: 30px; border-bottom: 3px solid #D4AF37; padding-bottom: 15px;">כתבות מהעיתונות</h2>
-            
-            <div style="color: #333333; font-size: 20px; line-height: 1.8; text-align: right; margin-bottom: 40px;">
-                <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">כותל המזרח</h3>
-                <p style="margin-bottom: 25px;">כתבה מקיפה על מעמד ציון שנה לאיגוד עמלים, בהשתתפות מאות בני תורה יוצאי אתיופיה מכל רחבי הארץ. הכתבה מתארת את הפעילות המבורכת של האיגוד ואת ההצלחה הגדולה בשיבוץ בני ישיבות. <span style="color: #B8860B; font-weight: bold;">פורסם: כותל המזרח, תשפ"ד</span></p>
-                
-                <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">המזרח</h3>
-                <p style="margin-bottom: 25px;">כתבה מיוחדת על כינוס ההכנה לחג מתן תורה של איגוד עמלים, בהשתתפות יו"ר ש"ס אריה דרעי וראשי ישיבות. הכתבה מתארת את המעמד המרגש ואת המסר החשוב של חיזוק בני התורה יוצאי אתיופיה. <span style="color: #B8860B; font-weight: bold;">פורסם: המזרח, תשפ"ד</span></p>
-                
-                <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">בחדרי חרדים</h3>
-                <p style="margin-bottom: 25px;">כתבה מפורטת על פעילות איגוד עמלים בשיבוץ בני ישיבות יוצאי אתיופיה בישיבות מובחרות. הכתבה מתארת את הליווי האישי והתמיכה הרוחנית שמקבלים התלמידים. <span style="color: #B8860B; font-weight: bold;">פורסם: בחדרי חרדים, תשפ"ד</span></p>
-                </div>
-                
-            <h2 style="color: #D4AF37; font-size: 36px; font-weight: 900; text-align: center; margin: 60px 0 30px 0; border-bottom: 3px solid #D4AF37; padding-bottom: 15px;">מאמרים תורניים</h2>
-            
-            <div style="color: #333333; font-size: 20px; line-height: 1.8; text-align: right; margin-bottom: 40px;">
-                <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">בעמלה של תורה</h3>
-                <p style="margin-bottom: 25px;">מאמר תורני על חשיבות הלימוד והעמל בתורה בקרב בני התורה יוצאי אתיופיה. המאמר מתמקד בערכים של מסירות נפש ללימוד תורה והתמדה בעבודת ה'. <span style="color: #B8860B; font-weight: bold;">מאת: הרב נתנאל פרץ שליט"א</span></p>
-                
-                <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">חבורות תורניות</h3>
-                <p style="margin-bottom: 25px;">מאמר על חשיבות החבורות התורניות בקרב בני התורה יוצאי אתיופיה. המאמר מתאר את הדרך שבה החבורות מסייעות לחיזוק הקשר עם התורה והקהילה. <span style="color: #B8860B; font-weight: bold;">מאת: הרב ניסים יברקן שליט"א</span></p>
-                
-                <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">שיעורים מוקלטים</h3>
-                <p style="margin-bottom: 25px;">אוסף שיעורים מוקלטים מגדולי ישראל על חשיבות חיזוק בני התורה יוצאי אתיופיה. השיעורים כוללים דברי חיזוק ועידוד לבני הקהילה. <span style="color: #B8860B; font-weight: bold;">שיעורים מגדולי ישראל</span></p>
-                </div>
-        </div>
-    </div>
-
+    
     <div id="contact-page" class="page">
         <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
@@ -4735,9 +4690,7 @@
                             </div>
                         </div>
                     </div>
-                </section>
-        </div>
-    </main>
+                </div>
 
     <script>
         // 🎯 אפקטים משופרים - טקסט ותמונות לפי כיוון הכרטיסיה
