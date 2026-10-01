@@ -4,9 +4,10 @@
 <head> <!-- ראש המסמך - מכיל מידע על הדף -->
     <meta charset="UTF-8" /> <!-- קידוד תווים - תומך בעברית -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- התאמה למובייל - הדף יתאים את עצמו למסך -->
-    <title>איגוד עמלים</title> <!-- כותרת הדף - יופיע בטאב הדפדפן -->
+    <title>איגוד עמלים-האתר הרשמי</title> <!-- כותרת הדף - יופיע בטאב הדפדפן -->
     <link rel="icon" type="image/jpeg" href="https://images.matara.pro/ClientsImages/7013662.jpg?1"> <!-- favicon - העיגול הקטן בטאב הדפדפן -->
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="css/site.css"> <!-- עיצוב מדורים דינמיים: גלריה וכתבות -->
 
     <style>
 
@@ -589,6 +590,14 @@
         .page-content p:nth-of-type(4) { animation-delay: 0.4s; }
         .page-content p:nth-of-type(5) { animation-delay: 0.5s; }
         .page-content p:nth-of-type(6) { animation-delay: 0.6s; }
+
+        /* ביטול אנימציית נחיתת הטקסטים במדור התרומות — הטקסט מוצג באופן רגיל */
+        #contact-page .page-content h3,
+        #contact-page .page-content p {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
 
         /* אנימציה לכרטיסיות מידע - יורדות מלמעלה */
         .info-card,
@@ -1514,28 +1523,20 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transform: translateX(-100%); /* התמונות מתחילות משמאל */
-            transition: transform 0.6s ease-in-out, opacity 0.3s ease-in-out;
+            transform: none;
+            transition: opacity 1s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
             top: 0;
             left: 0;
+            pointer-events: none;
         }
 
         .slide.active {
             opacity: 1;
-            transform: translateX(0); /* התמונה הפעילה במרכז */
-        }
-
-        .slide.prev {
-            opacity: 1;
-            transform: translateX(100%); /* התמונה הקודמת נדחפת ימינה */
-        }
-
-        .slide.next {
-            opacity: 0;
-            transform: translateX(-100%); /* התמונה הבאה משמאל (מוסתרת) */
+            transform: none;
+            pointer-events: auto;
         }
 
         /* לתמונות */
@@ -2218,14 +2219,6 @@
             border-radius: 5px; /* פינות מעוגלות - נותן מראה רך לתמונות */
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* צל - נותן עומק לתמונות */
         }
-
-
-
-
-
-
-
-
 
         /* תיקון רווחים במדור האירועים */
         .events-page {
@@ -3264,6 +3257,325 @@
             }
         }
 
+        /* ============================================================
+           מדור גלריה — בסגנון כותרות חדשותיות: גופן כבד ובולט (Heebo 900)
+           (עותק זהה של העיצוב קיים גם ב-css/site.css עבור ממשק הניהול)
+           ============================================================ */
+
+        /* כותרת העמוד "גלריה" */
+        .gallery-page-title {
+            color: #000000;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 4em;
+            font-weight: 900;
+            font-family: 'Heebo', 'Arial Black', sans-serif;
+            letter-spacing: 3px;
+        }
+
+        /* רשת כרטיסי האירועים */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px auto;
+            max-width: 95%;
+        }
+
+        /* כרטיסיית אירוע בודדת */
+        .gallery-card {
+            background: #F5F5DC;
+            border: none;
+            border-radius: 0px;
+            padding: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-card-image {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .gallery-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 0px;
+            border: 3px solid #D4AF37;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            display: block;
+        }
+
+        /* הכותרת — בגופן הכבד בסגנון עיתוני */
+        .gallery-card-title {
+            font-family: 'Heebo', 'Arial Black', sans-serif;
+            font-weight: 900;
+            color: #1F1F1F;
+            font-size: 30px;
+            line-height: 1.35;
+            margin: 0 0 12px 0;
+            text-align: center;
+        }
+
+        .gallery-card-date {
+            color: #B8860B;
+            font-size: 22px;
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .gallery-card-teaser {
+            color: #333333;
+            font-size: 18px;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .gallery-card-btn {
+            margin-top: auto;
+            background: linear-gradient(135deg, #8B7355, #6B5344);
+            color: #F5F5DC;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 0px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-family: inherit;
+        }
+
+        .gallery-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #8B7355;
+            font-size: 20px;
+            padding: 40px;
+            background: rgba(245, 245, 220, 0.6);
+            border: 2px dashed #D4AF37;
+            border-radius: 20px;
+        }
+
+        /* תצוגת אירוע מלא — בסגנון כתבת חדשות: ללא מסגרות, ללא רקע, ללא צללים */
+        .gallery-full-view {
+            max-width: 860px;
+            margin: 30px auto;
+            padding: 0 20px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            text-align: right;
+        }
+
+        .gallery-full-title {
+            font-family: 'Heebo', 'Arial Black', sans-serif;
+            font-weight: 900;
+            color: #111111;
+            font-size: 48px;
+            line-height: 1.25;
+            text-align: right;
+            margin: 0 0 10px 0;
+        }
+
+        .gallery-full-date {
+            color: #B8860B;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .gallery-full-source {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 30px auto;
+            background: linear-gradient(45deg, #B8860B, #D4AF37, #B8860B);
+            color: #FFFFFF;
+            padding: 20px 35px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(184, 134, 11, 0.4);
+            border: 2px solid #FFFFFF;
+            text-align: center;
+        }
+
+        .gallery-full-source:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 12px 25px rgba(184, 134, 11, 0.5);
+        }
+
+        .gallery-full-body {
+            color: #1F1F1F;
+            font-size: 22px;
+            line-height: 1.9;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .gallery-full-body p {
+            margin-bottom: 20px;
+        }
+
+        .gallery-video {
+            width: 100%;
+            margin: 25px 0;
+        }
+
+        .gallery-video iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+
+        /* תמונות האירוע — כל תמונה ברוחב מלא וללא מסגרת */
+        .gallery-full-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 25px 0;
+            border: none;
+            border-radius: 0;
+            cursor: zoom-in;
+        }
+
+        .gallery-lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            cursor: zoom-out;
+            padding: 30px;
+        }
+
+        .gallery-lightbox img {
+            max-width: 92%;
+            max-height: 92%;
+            border: 4px solid #D4AF37;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B7355, #6B5344);
+            color: #F5F5DC;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        /* רספונסיביות למדור הגלריה */
+        @media (max-width: 600px) {
+            .gallery-page-title { font-size: 2.4em; }
+            .gallery-full-title { font-size: 32px; }
+            .gallery-card-title { font-size: 24px; }
+            .gallery-full-view { padding: 0 15px; margin: 15px 10px; }
+            .gallery-full-body { font-size: 19px; }
+            .gallery-video iframe { height: 320px; }
+        }
+
+        /* ============================================================
+           באנר עוגיות — עדין ומעוצב בהתאמה לעיצוב האתר
+           ============================================================ */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index: 99998;
+            background: #FFFFFF;
+            border-top: 3px solid #D4AF37;
+            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.15);
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-family: 'Heebo', Arial, sans-serif;
+            direction: rtl;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .cookie-banner.visible { transform: translateY(0); }
+
+        .cookie-banner .cookie-icon {
+            font-size: 34px;
+            flex: 0 0 auto;
+        }
+
+        .cookie-banner .cookie-text {
+            flex: 1;
+            min-width: 250px;
+            color: #333333;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .cookie-banner .cookie-text a {
+            color: #B8860B;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .cookie-banner .cookie-btn {
+            flex: 0 0 auto;
+            background: linear-gradient(135deg, #D4AF37, #B8860B);
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cookie-banner .cookie-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.55);
+        }
+
+        @media (max-width: 600px) {
+            .cookie-banner { padding: 14px 18px; gap: 12px; }
+            .cookie-banner .cookie-text { font-size: 14px; }
+            .cookie-banner .cookie-btn { width: 100%; }
+        }
+
     </style>
 </head>
 
@@ -3347,17 +3659,17 @@
         </div>
         
         <!-- כרטיסיה בהירה מתחת למצגת -->
-        <div style="width: 100%; background-color: #F5F5DC; padding: 60px 40px; margin: 0; margin-top: -50px; position: relative; z-index: 998; transition: transform 0.1s ease-out;">
+        <div style="width: 100%; box-sizing: border-box; background-color: #F5F5DC; padding: 60px 40px; margin: 0; margin-top: -50px; position: relative; z-index: 998; transition: transform 0.1s ease-out;">
             <!-- תת-כותרת -->
             <h2 class="hero-text-subtitle" style="font-size: 2.2em; font-weight: bold; margin-bottom: 40px; font-family: 'Frank Ruhl Libre', serif; color: #333333; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); text-align: center; width: 100%;">
                 איגוד עמלים
             </h2>
             
             <!-- טקסט תיאור עם אפקט הקלדה על כל רוחב המסך - גובה קבוע -->
-            <div class="hero-text-description" style="width: 100%; max-width: 100%; text-align: center; padding: 0 20px; box-sizing: border-box; min-height: 420px; height: 420px; position: relative; overflow: hidden;">
-                <p id="typewriter-text-1" class="typewriter-text" style="font-size: 1.6em; line-height: 1.8; margin-bottom: 30px; font-family: 'Frank Ruhl Libre', serif; font-weight: normal; color: black; text-align: right; direction: rtl; width: 100%; max-width: 100%; min-height: 150px; position: relative; padding-top: 0;"></p>
+            <div class="hero-text-description" style="width: 100%; max-width: 900px; margin: 0 auto; text-align: center; padding: 0 20px; box-sizing: border-box; min-height: 420px; height: 420px; position: relative; overflow: hidden;">
+                <p id="typewriter-text-1" class="typewriter-text" style="font-size: 1.6em; line-height: 1.8; margin: 0 auto 30px; font-family: 'Frank Ruhl Libre', serif; font-weight: normal; color: black; text-align: center; direction: rtl; width: 100%; max-width: 850px; min-height: 0; position: relative; padding-top: 0;"></p>
                 
-                <p id="typewriter-text-2" class="typewriter-text" style="font-size: 1.6em; line-height: 1.8; margin-bottom: 20px; font-family: 'Frank Ruhl Libre', serif; font-weight: normal; color: black; text-align: right; direction: rtl; width: 100%; max-width: 100%; min-height: 150px; position: relative; padding-top: 0;"></p>
+                <p id="typewriter-text-2" class="typewriter-text" style="font-size: 1.6em; line-height: 1.8; margin: 0 auto 20px; font-family: 'Frank Ruhl Libre', serif; font-weight: normal; color: black; text-align: center; direction: rtl; width: 100%; max-width: 850px; min-height: 0; position: relative; padding-top: 0;"></p>
             </div>
         </div>
         
@@ -3450,7 +3762,7 @@
     </div>
 
     <div id="about-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: 900; font-family: 'Heebo', 'Arial Black', sans-serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -3464,7 +3776,7 @@
         
         <!-- כפתור הורדת תקנון -->
         <div style="text-align: center; margin: 20px 0;">
-            <a href="https://drive.google.com/uc?export=download&id=1PcVmC25qjp4hH0vGGI-cWpzDFSiZ5sva" target="_blank" style="
+            <a href="https://drive.usercontent.google.com/u/0/uc?id=1QXVW8nvh0wOgY6gEVRchXazWXu2lLp2T&export=download" target="_blank" style="
                 display: inline-flex;
                 align-items: center;
                 gap: 10px;
@@ -3488,16 +3800,20 @@
         </div>
 
         <div class="content-box">
-            <p class="title">הנהגה רוחנית</p>
+            <p class="title" style="font-size: 50px;">הנהגה רוחנית</p>
             <p style="color: #333333;">האיגוד פועל תחת נשיאותו של חבר מועצת חכמי התורה, מרן ראש הישיבה הגאון הגדול רבי אברהם סאלים שליט"א, ובהכוונתם הצמודה של מרנן ורבנן ראשי הישיבות שליט"א.</p>
             
-            <p class="title">ההנהלה הפעילה</p>
-            <p style="color: #333333;">• הרב נתנאל פרץ שליט"א – יו"ר האיגוד</p>
-            <p style="color: #333333;">• הרב ניסים יברקן שליט"א</p>
-            <p style="color: #333333;">• הרב עודד תמנה שליט"א</p>
-            <p style="color: #333333;">• הרב אברהם עידן שליט"א – ראש ישיבת "עטרת הלוי"</p>
-            <p style="color: #333333;">• הרב דוד רביבו – מנהל מרכז ההכוון לבני ישיבות</p>
-
+            <p class="title" style="font-size: 50px;">ההנהלה הפעילה</p>
+            <p style="color: #333333; font-size: 35px;"> הרב נתנאל פרץ שליט״א – יו״ר האיגוד - ירושלים</p>
+            <p style="color: #333333;">בוגר ישיבת תורת זאב (סולבייצי'ק) וכולל שע"י ישיבת 'עטרת ישראל', מרבני הישיבה הגדולה 'כתר תורה', ומלפנים בישיבת 'רכסים' לצעירים בירושלים ואיש חינוך ותיק.</p>
+            <p style="color: #333333;"> משמש גם כמנהל אזורי מטעם איגודי בני ישיבות רבים ברחבי ירושלים, ובעיקר האיש שמאחורי התנופה והמהפכה הגדולה בקרב בני הישיבות מהקהילה האתיופית, היוזם ומארגן את כל אשר תחת יד האיגוד ואיש הקשר בבתי גדולי ישראל וראשי הישיבות שליט"א.</p>            
+            <p style="color: #333333; font-size: 35px;"> הרב ניסים יברקן שליט״א – מנהל האיגוד - נתיבות</p>
+            <p style="color: #333333;">בוגר ישיבת 'אמיתה של תורה' בראשות רה״י הגר״י עיני שליט״א. אברך כולל בנתיבות, שותף בהקמת פרויקטים ומיזמים חינוכיים רבים..</p>
+            <p style="color: #333333;"> במסגרת האיגוד - יזם וחיבר בין בני הישיבות מכל חלקי הארץ, ומיסד יחד עם הרב עודד תמנה את הקמת האיגוד בעבודה איטית ומחושבת, כיום משמש כמנהל ראשי באיגוד ואחראי על תכלול התחומים, תכנון והפקת אירועים, כתיבת התכנים, שיווק תקשורתי וניהול מרכז ההכוון והייעוץ, כאשר בתחום זה עשה שימוש וצבר ניסיון רב במסגרת לימודיו אצל הג״ר משה בויאר שליט״א במרכז ההכשרה ליועצים  "ויועצינו כבתחילה".
+           <p style="color: #333333; font-size: 35px;"> הרב עודד תמנה שליט״א – מנהל האיגוד - קרית גת - ירושלים</p>
+            <p style="color: #333333;">בוגר ישיבות 'תורת משה' ו'באר התלמוד' (יקירי ירושלים), המקורב לרה"י הגאון הגדול רבי חנוך כהן שליט״א. ת״ח עצום המונח היטב בעומקן של המסכתות והסוגיות הישיבתיות...</p>
+            <p style="color: #333333;">מחלוצי בני הישיבות מהקהילה האתיופית, מי שמיסד את הקמת האיגוד ומי שאחראי על מערך הקשר מול כל הבחורים ברחבי הארץ, בני הישיבות הקטנות והגדולות, איש הקשר והשטח - 'הפנים של האיגוד' בעולם הישיבות. כמו כן אחראי על הכנת הבחורים והכשרתם לקראת המבחנים המקיפים אצל ראשי הישיבות.".
+ 
             <div class="leadership-section">
                 <p style="color: #333333; border-bottom: 8px double #D4AF37; padding-bottom: 30px;">
                 <p class="title">מטרות ופעילות</p>
@@ -3594,6 +3910,17 @@
                    <p>האתר מאובטח באמצעות שימוש באמצעי אבטחה מתקדמים אשר מטרתם להבטיח שימוש תקין וגלילה בטוחה באתר וכן על מנת לשמור על פרטיות המשתמשים. כל המשתמש באתר ובשירותיו מתחייב כי לא יעשה כל פעילות שיש בה כדי לשבש את פעילות האתר, גניבת מידע על משתמשים ופריצה של מנגנוני האבטחה של האתר.</p>
                    <p>במקרה של שימוש לרעה, האיגוד יפעל נגד כל פעילות בכל דרך חוקית אשר תעמוד לרשותו לרבות חסימת המשתמש מגישה לאתר ונקיטת הליכים משפטיים נגד המשתמש באם יפעל כאמור.</p>
 
+                            <!-- עוגיות (Cookies) -->
+                   <h4>עוגיות (Cookies) וכלי מעקב של צד ג'</h4>
+                   <p>האתר עצמו אינו מציב עוגיות לצרכי מעקב או פרסום. עם זאת, בעת השימוש באתר נעשה שימוש בשירותים חיצוניים של צד ג' אשר עשויים להציב עוגיות בדפדפן שלך באופן עצמאי, ובכלל זה:</p>
+                   <ul>
+                       <li>• <strong>Google Fonts</strong> — להצגת גופני האתר</li>
+                       <li>• <strong>Google Drive / YouTube</strong> — לתצוגת מכתבים וסרטונים המוטמעים באתר</li>
+                       <li>• <strong>מערכת נדרים פלוס (מטרה)</strong> — לקבלת תרומות בדף התרומות</li>
+                   </ul>
+                   <p>עוגיות אלו נועדו לתפעול האתר ולאספקת השירותים המוצגים בו, ואינן משמשות את האיגוד לצרכי פרסום או מעקב. השימוש בשירותי צד ג' כפוף למדיניות הפרטיות של אותם גורמים, והאיגוד אינו אחראי לעוגיות שהם מציבים.</p>
+                   <p>בהתאם לחוק הגנת הפרטיות, התשמ"א-1981 (ובכלל זה תיקון 13 לחוק), ההמשך בשימוש באתר מהווה הסכמה מדעת לאמור בסעיף זה. ניתן לחסום או למחוק עוגיות בכל עת באמצעות הגדרות הדפדפן שלך.</p>
+
                             <!-- קניין רוחני -->
                    <h4>קניין רוחני</h4>
                    <p>כל זכויות הקניין הרוחני באתר זה הכוללים זכויות יוצרים, זכויות הפצה, סודות מסחריים, סימני המסחר וכל הקניין הרוחני מכל סוג שהוא, הן בנוגע לעיצוב האתר, הן באשר לתכנים המופיעים בו הינן רכושו הבלעדי של האיגוד.</p>
@@ -3657,7 +3984,7 @@
     </div>
 
     <div id="shiurim-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: 900; font-family: 'Heebo', 'Arial Black', sans-serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -3784,7 +4111,7 @@
                 </div>
                 
                 <h4>מעמד היסטורי מרגש</h4>
-                <p style="width: 100%; max-width: 100%; text-align: right; line-height: 1.8; font-size: 24px; color: #2c3e50; font-weight: 600; text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05);">
+                <p style="width: 100%; max-width: 100%; text-align: right; line-height: 1.8; font-size: 24px; color: #112233; font-weight: 600; text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.05);">
                     במוצאי 'זאת חנוכה' נערך בבית שמש מעמד היסטורי מרגש ומרומם שבו התכנסו מאות בני תורה יוצאי אתיופיה מכל קצוות הארץ למעמד 'להודות ולהלל' לרגל שנה ליסוד איגוד 'עמלים'. במעמד השתתפו נשיא האיגוד מרן ראש הישיבה הגר"א סאלים חבר מועצת חכמי התורה, מרן הראשל"צ הגר"ד יוסף שליט"א, גדולי ראשי הישיבות שליט"א, רבני בני התורה יוצאי אתיופיה, יו"ר תנועת ש"ס הרב אריה דרעי השר לשירותי דת הרב מיכאל מלכיאלי ראש העיר בית שמש הרב גרינברג ועוד.<br><br>
                 </p>
 
@@ -4053,7 +4380,7 @@
     </div>
 
     <div id="gallery-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 class="gallery-page-title">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -4065,8 +4392,13 @@
             </div>
         </h2>
         
-        <!-- כרטיסיות אירועים עם קישורים לפרטים נוספים -->
-        <div class="events-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 20px auto; max-width: 95%;">
+        <!-- רשת האירועים הדינמית — נבנית מתוך data/galleries-data.js -->
+        <div id="gallery-grid" class="gallery-grid"></div>
+
+        <div id="gallery-full-view" class="gallery-full-view" style="display: none;"></div>
+
+        <!-- ===== תוכן הגלריה הישן (סטטי) — מוסתר ואינו בשימוש; נשמר כגיבוי בלבד ===== -->
+        <div style="display: none;" aria-hidden="true">
             <!-- כרטיסיה 1: ציון שנה לאיגוד עמלים -->
             <div class="event-card" style="position: relative; background: #F5F5DC; border: none; border-radius: 0px; padding: 20px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; cursor: pointer; text-align: center;" onclick="showEventDetails('event1')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
                 <div style="text-align: center; margin-bottom: 15px;">
@@ -4386,10 +4718,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+
     </div>
 
     <div id="news-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 style="color: black; text-align: center; margin: 0; font-size: 4em; font-weight: 900; font-family: 'Heebo', 'Arial Black', sans-serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -4431,7 +4765,7 @@
 
 
     <div id="letters-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 style="color: black; text-align: center; margin: 0; font-size: 4em; font-weight: 900; font-family: 'Heebo', 'Arial Black', sans-serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -4509,7 +4843,7 @@
     </div>
 
     <div id="galeinot-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 style="color: black; text-align: center; margin: 0; font-size: 4em; font-weight: 900; font-family: 'Heebo', 'Arial Black', sans-serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -4568,7 +4902,7 @@
 
     
     <div id="contact-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: 900; font-family: 'Heebo', 'Arial Black', sans-serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -4580,38 +4914,58 @@
             </div>
         </h2>
         <div class="page-content">
-            <div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-                <p style="text-align: center; line-height: 1.8; color: #333333; font-size: 20px; margin-bottom: 30px;">
-                    "כפי ריבוי הפעילויות – כך גודל הצרכים לבני התורה"<br>
-                    ב"ה, איגוד עמלים פועל במסירות נדירה למען בני ישיבות ברמה הגבוהה ביותר יוצאי אתיופיה.
-                    עם ריבוי הפעילויות והצרכים, באים גם צרכי הארגון.<br>
-                    זכות נדירה להשתתף בחיזוק בני התורה ובשיבוץ בני האיגוד בישיבות.
+            <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+
+                <!-- שזירת פתיחה -->
+                <p style="text-align: center; line-height: 2; color: #1F1F1F; font-size: 22px; margin: 20px auto 10px; max-width: 800px; font-family: Arial, Helvetica, sans-serif;">
+                    "כפי ריבוי הפעילויות – כך גודל הצרכים לבני התורה"
                 </p>
-                
-                <h2 style="color: #D4AF37; font-size: 32px; font-weight: 900; text-align: center; margin: 40px 0 30px 0; border-bottom: 3px solid #D4AF37; padding-bottom: 15px;">לתרומות נא לפנות באחת מהדרכים המפורטות כאן:</h2>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">כתובת הארגון</h3>
-                    <p style="color: #333333; font-size: 20px; margin-bottom: 25px; text-align: right;">רחוב העליה 22, נתיבות</p>
-                    
-                    <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">לתרומה מאובטחת</h3>
-                    <p style="margin-bottom: 25px; text-align: right;">
-                        <a href="https://www.matara.pro/nedarimplus/online/?mosad=7013662" style="color: #D4AF37; font-size: 22px; text-decoration: underline; font-weight: bold;">מערכת נדרים פלוס</a>
-                    </p>
-                    
-                    <h3 style="color: #B8860B; font-size: 28px; font-weight: bold; margin: 30px 0 15px 0; text-align: right;">אימייל</h3>
-                    <p style="color: #333333; font-size: 18px; margin-bottom: 10px; text-align: right;">ליצירת קשר והצטרפות לציבור התורמים</p>
-                    <p style="color: #D4AF37; font-size: 22px; cursor: pointer; text-decoration: underline; margin-bottom: 10px; text-align: right; font-weight: bold;" onclick="openEmail()">
-                        nisim2481@gmail.com
-                    </p>
-                    <p style="color: #333333; font-size: 18px; text-align: right;">ואנו נשתדל לשוב אליכם במהרה</p>
+                <p style="text-align: center; line-height: 1.9; color: #333333; font-size: 19px; margin: 0 auto 35px; max-width: 820px; font-family: Arial, Helvetica, sans-serif;">
+                    ב"ה, איגוד עמלים פועל במסירות נדירה למען בני ישיבות יוצאי אתיופיה — שיבוץ בישיבות מובחרות, ליווי אישי, כינוסים תורניים ומבחני סיכום.
+                    <strong>זכות נדירה להיות שותף בחיזוק בני התורה.</strong>
+                </p>
+
+                <!-- כרטיסיות תרומה — בסגנון כרטיסיות מדור הגלריות -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin: 0 0 45px;">
+
+                    <!-- כרטיסיה 1: תרומה מאובטחת -->
+                    <div class="gallery-card">
+                        <h3 class="gallery-card-title" style="font-family: 'Heebo', 'Arial Black', sans-serif; font-weight: 900; color: #1F1F1F; font-size: 30px; line-height: 1.35; margin: 0 0 12px 0; text-align: center; text-shadow: none;">תרומה מאובטחת</h3>
+                        <p class="gallery-card-date" style="color: #B8860B; font-size: 22px; margin: 0 0 12px 0; text-align: center; font-weight: bold;">אשראי · הוראת קבע</p>
+                        <p class="gallery-card-teaser" style="color: #333333; font-size: 18px; line-height: 1.5; text-align: center; margin: 0 0 15px 0;">תרומה ישירה דרך מערכת נדרים פלוס המאובטחת — בכרטיס אשראי או הוראת קבע.</p>
+                        <a class="gallery-card-btn" href="https://www.matara.pro/nedarimplus/online/?mosad=7013662" target="_blank" rel="noopener" style="display: block; text-decoration: none;">לתרומה מאובטחת</a>
+                    </div>
+
+                    <!-- כרטיסיה 2: תרומה בטלפון -->
+                    <div class="gallery-card">
+                        <h3 class="gallery-card-title" style="font-family: 'Heebo', 'Arial Black', sans-serif; font-weight: 900; color: #1F1F1F; font-size: 30px; line-height: 1.35; margin: 0 0 12px 0; text-align: center; text-shadow: none;">תרומה בטלפון</h3>
+                        <p class="gallery-card-date" style="color: #B8860B; font-size: 22px; margin: 0 0 12px 0; text-align: center; font-weight: bold;">050-1234567</p>
+                        <p class="gallery-card-teaser" style="color: #333333; font-size: 18px; line-height: 1.5; text-align: center; margin: 0 0 15px 0;">לתרומה בטלפון, להפקדה בנקאית או לכל שאלה — נשמח לעמוד לשירותכם בכל עת.</p>
+                        <a class="gallery-card-btn" href="tel:0501234567" style="display: block; text-decoration: none;">התקשרו אלינו</a>
+                    </div>
+
+                    <!-- כרטיסיה 3: דואר אלקטרוני -->
+                    <div class="gallery-card">
+                        <h3 class="gallery-card-title" style="font-family: 'Heebo', 'Arial Black', sans-serif; font-weight: 900; color: #1F1F1F; font-size: 30px; line-height: 1.35; margin: 0 0 12px 0; text-align: center; text-shadow: none;">בדואר אלקטרוני</h3>
+                        <p class="gallery-card-date" style="color: #B8860B; font-size: 18px; margin: 0 0 12px 0; text-align: center; font-weight: bold; word-break: break-all;">nisim2481@gmail.com</p>
+                        <p class="gallery-card-teaser" style="color: #333333; font-size: 18px; line-height: 1.5; text-align: center; margin: 0 0 15px 0;">ליצירת קשר עם משרדי האיגוד ולהצטרפות למעגל התורמים.</p>
+                        <a class="gallery-card-btn" href="mailto:nisim2481@gmail.com" style="display: block; text-decoration: none;">שליחת מייל</a>
+                    </div>
+
                 </div>
+
+                <!-- חותם אמון -->
+                <p style="text-align: center; color: #6B5344; font-size: 16px; line-height: 1.8; margin: 0 auto 30px; max-width: 700px; font-family: Arial, Helvetica, sans-serif;">
+                    התרומה דרך מערכת נדרים פלוס מאובטחת ברמה הבנקאית ·
+                    האיגוד פועל תחת נשיאותו של מרן ראש הישיבה הגאון הגדול רבי אברהם סאלים שליט"א
+                </p>
+
             </div>
         </div>
     </div>
 
     <div id="articles-page" class="page">
-        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: bold; font-family: 'Frank Ruhl Libre', serif; letter-spacing: 3px;">
+        <h2 style="color: black; text-align: center; margin: 20px 0; font-size: 4em; font-weight: 900; font-family: 'Heebo', 'Arial Black', sans-serif; letter-spacing: 3px;">
             <div style="display: inline-block; vertical-align: middle; margin-right: 0px;">
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #D4AF37, #B8860B); margin-bottom: 3px;"></div>
                 <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #B8860B, #8B7355); margin-bottom: 3px;"></div>
@@ -4909,7 +5263,7 @@
             }
         });
 
-        // אפקט הקלדה לטקסטים בעמוד הבית
+        // הצגת טקסטים בעמוד הבית — ללא אפקט הקלדה, כדי שהטקסט לא "יקפוץ"
         const typewriterTexts = [
             'איגוד עמלים נוסד בשנת תשפ"ד מתוך תחושת שליחות עמוקה להעניק לבני התורה יוצאי אתיופיה את ההזדמנות והליווי והמסגרת הרוחנית הראויה כדי שיוכלו לגדול ולהתעלות בעולמה של תורה ולהשתלב בעולם הישיבות הספרדי והחרדי מתוך כבוד ושייכות וגדלות',
             'האיגוד פועל תחת נשיאותו של חבר מועצת חכמי התורה מרן ראש הישיבה הגאון הגדול רבי אברהם סאלים שליט"א ובהכוונתם הצמודה של מרנן ורבנן ראשי הישיבות שליט"א ועוסק בשיבוץ תלמידים יוצאי אתיופיה בישיבות מובחרות ומספק הכוונה אישית ורוחנית לכל תלמיד'
@@ -4917,43 +5271,18 @@
         
         let typewriterStarted = false;
         
-        function typeWriter(elementId, text, speed = 20) {
-            return new Promise((resolve) => {
-                const element = document.getElementById(elementId);
-                if (!element) {
-                    resolve();
-                    return;
-                }
-                let i = 0;
-                element.textContent = '';
-                element.classList.add('typing'); // הוספת class להצגת cursor
-                
-                function type() {
-                    if (i < text.length) {
-                        element.textContent += text.charAt(i);
-                        i++;
-                        setTimeout(type, speed);
-                    } else {
-                        // סיום הקלדה - הסרת cursor
-                        setTimeout(() => {
-                            element.classList.remove('typing');
-                        }, 300);
-                        resolve();
-                    }
-                }
-                type();
-            });
-        }
-        
-        async function startTypewriterEffect() {
+        function startTypewriterEffect() {
             if (typewriterStarted) return;
             typewriterStarted = true;
             
-            await typeWriter('typewriter-text-1', typewriterTexts[0], 20);
-            await typeWriter('typewriter-text-2', typewriterTexts[1], 20);
+            // הצגה מיידית של שני הטקסטים — ללא הקלדה וללא תזוזה
+            const el1 = document.getElementById('typewriter-text-1');
+            const el2 = document.getElementById('typewriter-text-2');
+            if (el1) { el1.textContent = typewriterTexts[0]; el1.classList.remove('typing'); }
+            if (el2) { el2.textContent = typewriterTexts[1]; el2.classList.remove('typing'); }
         }
         
-        // התחלת האפקט כשגוללים לאזור הטקסט
+        // הצגת הטקסטים כשגוללים לאזור שלהם
         const typewriterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -5091,6 +5420,17 @@
 
         function showPage(pageId) {
             console.log('showPage called with:', pageId);
+
+            // עמוד התנאים הוא כרטיסייה בתוך עמוד האודות — מציגים אודות וגוללים אליה
+            if (pageId === 'terms') {
+                showPage('about');
+                setTimeout(function () {
+                    var card = document.querySelector('.privacy-policy-card');
+                    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+                return false;
+            }
+
             // אם זה דף אירועים, סגור כרטיסיות פתוחות
             if (pageId === 'events') {
                 closeEventDetails();
@@ -5133,22 +5473,19 @@
                 console.log('Page not found!');
             }
 
-            // הוספת active לקישור הנכון
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pageMap = {
-                    'home': 0,
-                    'about': 1,
-                    'letters': 2,
-                    'galeinot': 3,
-                    'news': 4,
-                    'gallery': 5,
-                    'articles': 6,
-                    'contact': 7
-                };
-                
-            if (pageMap[pageId] && navLinks[pageMap[pageId]]) {
-                navLinks[pageMap[pageId]].classList.add('active');
+            // הוספת active לקישור הנכון — לפי הקישור עצמו ולא לפי מיקומו בתפריט
+            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+            if (activeLink && activeLink.classList.contains('nav-link')) {
+                activeLink.classList.add('active');
             }
+
+            // עדכון הכתובת בדפדפן כדי שכפתור החזרה וקישורים ישירים יעבדו
+            if (('#' + pageId) !== location.hash) {
+                location.hash = pageId;
+            }
+
+            // גלילה לראש העמוד בכל מעבר בין עמודים
+            window.scrollTo(0, 0);
 
             refreshEffectsOnPageChange();
             return false; // מונע ניווט לדף אחר
@@ -5215,6 +5552,12 @@
             homePage.classList.add('active-page');
             document.querySelector('.nav-link').classList.add('active');
 
+            // עדכון הכתובת וגלילה לראש
+            if (location.hash !== '' && location.hash !== '#home') {
+                location.hash = 'home';
+            }
+            window.scrollTo(0, 0);
+
             // הוספת בראונר לדף הבית אם אין לו עדיין
             ensureFooterExists(homePage);
 
@@ -5235,6 +5578,31 @@
             }
         });
 
+
+        // ניתוב לפי כתובת (Hash Routing): כפתור החזרה של הדפדפן עובר בין עמודים,
+        // וקישור ישיר כמו index.html#gallery פותח ישירות את מדור הגלריות
+        window.addEventListener('hashchange', function () {
+            var id = location.hash.replace('#', '') || 'home';
+            var currentPage = document.querySelector('.page.active-page');
+            var currentId = currentPage ? currentPage.id.replace('-page', '') : 'home';
+            if (id === currentId) return; // השינוי הגיע מתוך showPage עצמו — אין מה לעשות
+            if (id === 'terms') { showPage('terms'); return; }
+            if (document.getElementById(id + '-page')) {
+                showPage(id);
+            } else {
+                showPage('home');
+            }
+        });
+
+        // פתיחת האתר לפי העמוד שמופיע בכתובת
+        (function () {
+            var id = location.hash.replace('#', '');
+            if (!id || id === 'home') return;
+            if (id === 'terms') { showPage('terms'); return; }
+            if (document.getElementById(id + '-page')) {
+                showPage(id);
+            }
+        })();
 
         function openEmail() {
             const subject = 'תרומה לאיגוד עמלים';
@@ -5422,13 +5790,9 @@
 
         // הוספת מאזין לכפתור חזרה
         window.addEventListener('popstate', function(event) {
-            // בדיקה אם יש מידע על המצב הנוכחי
+            // סגירת כרטיסיית אירוע פתוחה בלחיצה על חזרה; מעברי עמודים מטופלים דרך ה-hash
             if (event.state && event.state.view === 'event-details') {
-                // אם היינו בכרטיסיית אירוע, חזור לרשת האירועים
                 closeEventDetails();
-            } else {
-                // אם היינו ברשת האירועים, חזור לדף הראשי
-                window.location.href = 'index.html';
             }
         });
 
@@ -5675,54 +6039,27 @@
             }
         });
 
-        // מצגת תמונות עם אפקט דחיפה מימין לשמאל
+        // מצגת תמונות — מעבר הדרגתי באותו מקום (Cross-Fade), ללא תזוזה לצדדים
         function initSlideshow() {
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
             
-            // הסתרת כל התמונות
-            slides.forEach(slide => {
-                slide.classList.remove('active', 'prev', 'next');
-            });
-            
-            // הצגת התמונה הראשונה
+            // הסרת כל המחלקות הישנות והצגת התמונה הראשונה
+            slides.forEach(slide => slide.classList.remove('active', 'prev', 'next'));
             if (slides.length > 0) {
                 slides[0].classList.add('active');
             }
             
-            // הכנת התמונה הבאה
-            if (slides.length > 1) {
-                slides[1].classList.add('next');
-            }
+            if (slides.length <= 1) return;
             
             function showNextSlide() {
-                if (slides.length <= 1) return;
-                
-                // התמונה הנוכחית הופכת ל-prev (נדחפת ימינה)
+                // התמונה הנוכחית נעלמת והבאה מופיעה באותו מקום — בלי שום תנועה אופקית
                 slides[currentSlide].classList.remove('active');
-                slides[currentSlide].classList.add('prev');
-                
-                // מעבר לתמונה הבאה
                 currentSlide = (currentSlide + 1) % slides.length;
-                
-                // התמונה הבאה נכנסת למרכז
-                slides[currentSlide].classList.remove('next');
                 slides[currentSlide].classList.add('active');
-                
-                // הכנת התמונה הבאה אחרי הבאה
-                const nextIndex = (currentSlide + 1) % slides.length;
-                slides.forEach(slide => slide.classList.remove('next'));
-                if (nextIndex !== currentSlide) {
-                    slides[nextIndex].classList.add('next');
-                }
-                
-                // הסרת prev מהתמונה הקודמת אחרי האנימציה
-                setTimeout(() => {
-                    slides.forEach(slide => slide.classList.remove('prev'));
-                }, 600);
             }
             
-            // הפעלת המצגת כל 4 שניות
+            // החלפת תמונה כל 4 שניות
             setInterval(showNextSlide, 4000);
         }
 
@@ -5896,6 +6233,332 @@
 
     </script>
 
+    <!-- ====== גלריה דינמית ====== -->
+    <!-- 1) נתוני הגלריה — קובץ חיצוני שמתעדכן על ידי ממשק הניהול (admin.html ← "הורד קובץ לאתר") -->
+    <script src="data/galleries-data.js"></script>
+
+    <!-- 2) גיבוי מובנה לנתונים — בשימוש רק אם קובץ הנתונים החיצוני לא נטען -->
+    <script>
+        if (!window.AMALIM_GALLERIES) { window.AMALIM_GALLERIES = [
+          {
+            id: "gal-1",
+            title: "ציון שנה לאיגוד עמלים",
+            date: "מוצאי זאת חנוכה תשפ\"ד",
+            teaser: "מעמד היסטורי מרגש ומרומם בהשתתפות מאות בני תורה יוצאי אתיופיה מכל קצוות הארץ",
+            body: "במוצאי 'זאת חנוכה' נערך בבית שמש מעמד היסטורי מרגש ומרומם שבו התכנסו מאות בני תורה יוצאי אתיופיה מכל קצוות הארץ למעמד 'להודות ולהלל' לרגל שנה ליסוד איגוד 'עמלים'. במעמד השתתפו נשיא האיגוד מרן ראש הישיבה הגר\"א סאלים חבר מועצת חכמי התורה, מרן הראשל\"צ הגר\"ד יוסף שליט\"א, גדולי ראשי הישיבות שליט\"א, רבני בני התורה יוצאי אתיופיה, יו\"ר תנועת ש\"ס הרב אריה דרעי, השר לשירותי דת הרב מיכאל מלכיאלי, ראש העיר בית שמש הרב גרינברג ועוד.\n\nאיגוד 'עמלים' המהווה בית לכל בני התורה יוצאי אתיופיה בארה\"ק ועוסק בשיבוץ והכוונה לבני הישיבות יוצאי אתיופיה, ציין במוצאי 'זאת חנוכה' שנה ליסוד האיגוד, כשלמעמד שנערך בבית שמש עלו ובאו כל גדולי ראשי הישיבות שליט\"א.\n\nרגע השיא במעמד היה עת נשא מרן רה\"י נשיא האיגוד הגר\"א סאלים שליט\"א את דבריו בנוכחותו של מרן הראשל\"צ הגר\"ד יוסף שליט\"א, וציין בדבריו את השלימות של עמ\"י כאשר יש מקום לכל בני התורה ולכל עדה בהיכלי הישיבות.\n\nבסיום המעמד המרגש קיבלו הנוכחים ביטאון מיוחד הנקרא 'לאור עולם' אשר יצא לאור לרגל הכינוס, ובו סיקור מקיף על פעילות האיגוד, פרקי דעת ומאמרים מגדולי ראשי הישיבות ורבני בני התורה יוצאי אתיופיה, ועוד.",
+            images: [
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-36-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-35-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-34-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-31-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-27-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-22-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-17-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-14-scaled.jpg",
+              "https://mizrach.co.il/wp-content/uploads/2025/01/%D7%A6%D7%99%D7%95%D7%9F-%D7%A9%D7%A0%D7%94-%D7%9C%D7%94%D7%A7%D7%9E%D7%AA-%D7%90%D7%99%D7%92%D7%95%D7%93-%D7%A2%D7%9E%D7%9C%D7%99%D7%9D-%D7%99%D7%95%D7%A6%D7%90%D7%99-%D7%90%D7%AA%D7%99%D7%95%D7%A4%D7%99%D7%94-29-scaled.jpg"
+            ],
+            sourceName: "כותל המזרח",
+            sourceUrl: "https://mizrach.co.il/13718/",
+            videoUrl: "https://www.youtube.com/embed/MDI4atxGplI"
+          },
+          {
+            id: "gal-2",
+            title: "האיגוד מסכם בסיפוק עונת רישום ראשונה ומוצלחת",
+            date: "תשפ\"ה · אייר",
+            teaser: "עונת רישום ראשונה ומוצלחת של בני ישיבות יוצאי אתיופיה לישיבות המובילות",
+            body: "אחר תקופת רישום מוצלחת, התקבלו בני ישיבות החברים באיגוד 'עמלים' שע\"י יוצאי אתיופיה, לישיבות 'מאור התורה', 'דעת חיים', 'יסודות', 'ברית יעקב', 'אש התלמוד', 'באר התלמוד ירושלים', 'אוהל יוסף ב\"ב', 'רכסים', 'תורת אברהם', 'אוהל תורה', 'תפארת הלוי', ועוד.\n\nבתקופה האחרונה פעל האיגוד באינטנסיביות במטרה לרשום לכל הישיבות הגדולות המובילות, בחורים מצוינים מהטובים ביותר בישיבות הקטנות ברחבי הארץ, זאת יחד עם מנהל מרכז ההכוון לבני ישיבות הרב דוד רביבו שליט\"א.\n\nעם תום עונת הרישום מסכמים ראשי האיגוד בסיפוק רב את הצלחתם הגדולה של הבחורים היקרים שיחיו, ומציינים כי הבחורים זכו להתקבל לישיבות הגדולות המובחרות מהמזרח של עולם התורה הספרדי.",
+            images: [
+              "https://hm-news.co.il/wp-content/uploads/2024/09/WhatsApp-Image-2024-09-03-at-19.11.28.jpeg"
+            ],
+            sourceName: "כותל המזרח",
+            sourceUrl: "https://mizrach.co.il/10159/",
+            videoUrl: ""
+          },
+          {
+            id: "gal-3",
+            title: "כינוס הכנה לקבלת התורה",
+            date: "ערב שבעות · ה' סיון תשפ\"ה",
+            teaser: "כינוס מיוחד להכנה רוחנית לקראת חג מתן תורה בהשתתפות מרנן ורבנן גדולי ומאורי הדור שליט\"א",
+            body: "בני התורה מסלתה ומשמנה של הקהילה האתיופית התכנסו לכינוס הכנה לקבלת התורה היסטורי ומרומם. המעמד בראשות מנהיג עולם הישיבות הגרמ\"ה הירש וראשי הישיבות.\n\nמאות בני תורה גדשו בהמוניהם את אולמי 'היכלי מלכות' במעמד שנערך בחסות עיריית ב\"ב ע\"י איגוד 'עמלים' המאגד תחתיו את בני התורה מהקהילה האתיופית מכל רחבי הארץ.\n\nלמעמד הגדול עלו ובאו מרנן ורבנן גדולי התורה וראשי הישיבות ובראשם מנהיג עולם הישיבות הגרמ\"ה הירש.\n\nשיאו של המעמד היה, עת כניסתו ונאומו של מנהיג עולם התורה הגרמ\"ה הירש. בדברים שנשא עמד על דברי הרמח\"ל בדרך ה' על הדרך לדבקות הבורא, ואמר בנוגע ל'בעיית הגיוס': \"אני יודע את הבעיה הזאת. והקב\"ה ייתן שלא יהיה שום בעיה מזה. אנחנו דואגים בשבילכם ומאת ה' זה יצא בסדר. אך אתם אל תדאגו. המשיכו בעבודת ה' שלכם. בלימוד תורה שלכם ובזכות זה יהיה לכם רק טוב\".\n\nיו\"ר ש\"ס אריה דרעי, לא הסתיר את התרגשותו מהציבור העצום שגדשו את האולם, ואמר כי אין ספק שזהו חזון אחרית הימים לראות את המראה הזה.\n\nבסיום המעמד המרגש קיבלו המשתתפים שובר מיוחד מתנת 'פרסטר' וקובץ הגות ומחשבה 'בעמלה של תורה' ח\"ב ובו מאמרי מוסר ומחשבה מגדולי ראשי הישיבות.",
+            images: [
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811284_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811317_tumb_800X480.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811287_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811274_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811318_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811295_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811293_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811307_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811294_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811277_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811310_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811299_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811280_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811306_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811303_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811290_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811285_tumb_800Xauto.jpg",
+              "https://storage.bhol.co.il/media/lt/1657699/gallery/811272_tumb_800Xauto.jpg"
+            ],
+            sourceName: "בחדרי חרדים",
+            sourceUrl: "https://www.bhol.co.il/news/1695666",
+            videoUrl: ""
+          }
+        ]; }
+    </script>
+
+    <!-- 3) מנוע הצגת הגלריה — מוטמע בדף (עותק זהה קיים ב-js/galleries.js עבור ממשק הניהול) -->
+    <script>
+        (function () {
+            'use strict';
+
+            var STORAGE_KEY = 'amalim_galleries_v1';
+
+            function esc(str) {
+                return String(str == null ? '' : str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function getGalleries() {
+                try {
+                    var saved = localStorage.getItem(STORAGE_KEY);
+                    if (saved) {
+                        var parsed = JSON.parse(saved);
+                        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                    }
+                } catch (e) {
+                    console.warn('galleries: local backup read failed', e);
+                }
+                return window.AMALIM_GALLERIES || [];
+            }
+
+            function saveGalleries(galleries) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(galleries));
+                } catch (e) {
+                    console.warn('galleries: local backup save failed', e);
+                }
+                render();
+            }
+
+            function renderCardHtml(gallery) {
+                var html = '<div class="gallery-card" data-gallery-id="' + esc(gallery.id) +
+                           '" onclick="AMALIM_GALLERY.openGallery(\'' + esc(gallery.id) + '\')">';
+
+                if (gallery.images && gallery.images.length > 0) {
+                    html += '<div class="gallery-card-image"><img src="' + esc(gallery.images[0]) +
+                            '" alt="' + esc(gallery.title) + '" loading="lazy"></div>';
+                }
+
+                html += '<h3 class="gallery-card-title">' + esc(gallery.title) + '</h3>';
+
+                if (gallery.date) {
+                    html += '<p class="gallery-card-date">' + esc(gallery.date) + '</p>';
+                }
+
+                if (gallery.teaser) {
+                    html += '<p class="gallery-card-teaser">' + esc(gallery.teaser) + '</p>';
+                }
+
+                html += '<div class="gallery-card-btn">פרטים נוספים</div>';
+                html += '</div>';
+                return html;
+            }
+
+            function renderFullHtml(gallery, options) {
+                options = options || {};
+                var html = '<div class="gallery-full-view">';
+
+                if (options.withBackButton !== false) {
+                    html += '<button class="back-btn" onclick="AMALIM_GALLERY.closeGallery()">→ חזרה לכל האירועים</button>';
+                }
+
+                html += '<h2 class="gallery-full-title">' + esc(gallery.title) + '</h2>';
+
+                if (gallery.date) {
+                    html += '<p class="gallery-full-date">' + esc(gallery.date) + '</p>';
+                }
+
+                if (gallery.sourceUrl) {
+                    var label = gallery.sourceName ?
+                        ('מקור: ' + esc(gallery.sourceName) + ' | לחץ כאן לקריאת הכתבה המלאה') :
+                        'לחץ כאן לקריאת הכתבה המלאה';
+                    html += '<a class="gallery-full-source" href="' + esc(gallery.sourceUrl) +
+                            '" target="_blank" rel="noopener">' + label + '</a>';
+                }
+
+                // מבנה כתבת חדשות: מלל פתיחה ← תמונת שער ← שאר המלל ← כל התמונות ברוחב מלא
+                var paragraphs = String(gallery.body || '').split(/\n\s*\n/)
+                    .map(function (p) { return p.trim(); })
+                    .filter(function (p) { return p.length > 0; });
+
+                var lead = [];
+                var rest = [];
+                var leadChars = 0;
+                for (var i = 0; i < paragraphs.length; i++) {
+                    // פסקאות הפתיחה: עד 2 פסקאות או ~350 תווים
+                    if (lead.length < 2 && leadChars < 350) {
+                        lead.push(paragraphs[i]);
+                        leadChars += paragraphs[i].length;
+                    } else {
+                        rest.push(paragraphs[i]);
+                    }
+                }
+                // אם אין מספיק מלל לפתיחה — כל המלל יהיה בפתיחה
+                if (rest.length === 0 && lead.length < paragraphs.length) {
+                    rest = paragraphs.slice(lead.length);
+                    lead = paragraphs.slice(0, lead.length);
+                }
+
+                var cover = (gallery.images && gallery.images.length > 0) ? gallery.images[0] : null;
+
+                if (lead.length > 0) {
+                    html += '<div class="gallery-full-body gallery-full-lead">' +
+                            lead.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
+                            '</div>';
+                }
+
+                if (cover) {
+                    html += '<img class="gallery-full-image" src="' + esc(cover) + '" alt="' + esc(gallery.title) +
+                            '" loading="lazy" onclick="AMALIM_GALLERY.openLightbox(\'' + esc(cover) + '\')">';
+                }
+
+                if (rest.length > 0) {
+                    html += '<div class="gallery-full-body">' +
+                            rest.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
+                            '</div>';
+                }
+
+                if (gallery.videoUrl) {
+                    html += '<div class="gallery-video"><iframe src="' + esc(gallery.videoUrl) +
+                            '" title="' + esc(gallery.title) +
+                            '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+                }
+
+                // כל התמונות של האירוע — כל אחת ברוחב העמוד, ללא מסגרת
+                if (gallery.images && gallery.images.length > 1) {
+                    html += gallery.images.slice(1).map(function (src) {
+                        return '<img class="gallery-full-image" src="' + esc(src) + '" alt="' + esc(gallery.title) +
+                               '" loading="lazy" onclick="AMALIM_GALLERY.openLightbox(\'' + esc(src) + '\')">';
+                    }).join('');
+                }
+
+                html += '</div>';
+                return html;
+            }
+
+            function render() {
+                var grid = document.getElementById('gallery-grid');
+                if (!grid) return;
+
+                var galleries = getGalleries();
+
+                if (galleries.length === 0) {
+                    grid.innerHTML = '<div class="gallery-empty">אין אירועים עדיין — ' +
+                                     'ניתן להוסיף דרך ממשק הניהול (admin.html)</div>';
+                    return;
+                }
+
+                grid.innerHTML = galleries.map(renderCardHtml).join('');
+            }
+
+            function openGallery(id) {
+                var gallery = getGalleries().filter(function (g) { return g.id === id; })[0];
+                var fullView = document.getElementById('gallery-full-view');
+                var grid = document.getElementById('gallery-grid');
+                if (!gallery || !fullView) return;
+
+                fullView.innerHTML = renderFullHtml(gallery);
+                fullView.style.display = 'block';
+                if (grid) grid.style.display = 'none';
+
+                fullView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function closeGallery() {
+                var fullView = document.getElementById('gallery-full-view');
+                var grid = document.getElementById('gallery-grid');
+
+                if (fullView) {
+                    fullView.style.display = 'none';
+                    fullView.innerHTML = '';
+                }
+                if (grid) grid.style.display = '';
+            }
+
+            function openLightbox(src) {
+                var box = document.createElement('div');
+                box.className = 'gallery-lightbox';
+                box.innerHTML = '<img src="' + src + '" alt="">';
+                box.addEventListener('click', function () { box.remove(); });
+                document.body.appendChild(box);
+            }
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    var box = document.querySelector('.gallery-lightbox');
+                    if (box) box.remove();
+                }
+            });
+
+            window.AMALIM_GALLERY = {
+                STORAGE_KEY: STORAGE_KEY,
+                getGalleries: getGalleries,
+                saveGalleries: saveGalleries,
+                renderCardHtml: renderCardHtml,
+                renderFullHtml: renderFullHtml,
+                render: render,
+                openGallery: openGallery,
+                closeGallery: closeGallery,
+                openLightbox: openLightbox
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', render);
+            } else {
+                render();
+            }
+        })();
+    </script>
+
+    <!-- ====== באנר עוגיות — הודעה עדינה על שימוש בעוגיות צד ג' ====== -->
+    <div class="cookie-banner" id="cookieBanner">
+        <span class="cookie-icon">🍪</span>
+        <div class="cookie-text">
+            אנו משתמשים בעוגיות לתפעול האתר, בכלל זה עוגיות של שירותים חיצוניים (גופנים, סרטונים ותרומות).
+            המשך גלישה מהווה הסכמה. <a href="#" onclick="showPage('terms'); dismissCookieBanner(); return false;">למדיניות הפרטיות המלאה</a>
+        </div>
+        <button class="cookie-btn" onclick="dismissCookieBanner()">הבנתי</button>
+    </div>
+
+    <script>
+        // באנר עוגיות — מוצג פעם אחת; אחרי אישור נשמר בזיכרון הדפדפן
+        (function () {
+            var KEY = 'amalim_cookie_consent_v1';
+            var banner = document.getElementById('cookieBanner');
+            if (!banner) return;
+
+            var accepted = false;
+            try { accepted = localStorage.getItem(KEY) === 'yes'; } catch (e) { /* ללא localStorage */ }
+
+            window.dismissCookieBanner = function () {
+                banner.classList.remove('visible');
+                try { localStorage.setItem(KEY, 'yes'); } catch (e) { /* ללא localStorage */ }
+                setTimeout(function () { banner.style.display = 'none'; }, 500);
+            };
+
+            if (!accepted) {
+                // הצגה אחרי שנייה — כדי לא להפריע לטעינה
+                setTimeout(function () { banner.classList.add('visible'); }, 1000);
+            } else {
+                banner.style.display = 'none';
+            }
+        })();
+    </script>
 
 </body>
 
