@@ -6412,8 +6412,7 @@
 
             // כותרת המשנה בכרטיסייה — שדה עצמאי; ריק = בלי כותרת משנה בכרטיסייה
             function getCardSubtitle(gallery) {
-                if (typeof gallery.cardSubtitle === 'string') return gallery.cardSubtitle;
-                return gallery.subtitle || '';
+                return (typeof gallery.cardSubtitle === 'string') ? gallery.cardSubtitle : '';
             }
 
             function renderCardHtml(gallery) {
