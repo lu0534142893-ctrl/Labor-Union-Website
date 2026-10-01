@@ -1,0 +1,489 @@
+/* ============================================================
+   css/site.css — עיצוב נקי מבוסס-מחלקות לאזור התוכן הניתן לעריכה
+   ============================================================
+   הקובץ הזה מפריד את העיצוב מהתוכן, כדי שכל ממשק (למשל admin.html
+   או מערכת חיצונית) יוכל לייצר כרטיסיות כתבה עם מחלקות בלבד —
+   בלי לכתוב שורת CSS אחת בתוך ה-HTML.
+
+   צבעי המותג:
+     זהב        #D4AF37
+     זהב כהה    #B8860B
+     חום         #8B7355
+     חום כהה    #6B5344
+     שמנת        #F5F5DC
+   ============================================================ */
+
+/* ---------- כותרת תיבה פנימית (למשל: "כתבות מהעיתונות") ---------- */
+.box-title {
+    color: #D4AF37;
+    font-size: 36px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.3);
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(245, 245, 220, 0.5), rgba(240, 240, 230, 0.5));
+    border-radius: 20px;
+    border: 3px solid #D4AF37;
+}
+
+/* ---------- רשת הכרטיסיות ---------- */
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+/* ---------- כרטיסיית כתבה בודדת ---------- */
+.article-card {
+    background: linear-gradient(135deg, #F5F5DC 0%, #F0F0E6 50%, #E8E8D8 100%);
+    border: 3px solid #D4AF37;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+}
+
+.article-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4), 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: #FFD700;
+}
+
+/* תמונת הכרטיסיה (אופציונלית) */
+.article-card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid #D4AF37;
+    margin-bottom: 18px;
+    background: #F0F0E6;
+}
+
+.article-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.article-card-title {
+    color: #D4AF37;
+    font-size: 26px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+}
+
+.article-card-text {
+    color: #8B7355;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: right;
+    margin-bottom: 15px;
+    /* הגבלת התצוגה ל-5 שורות בכרטיסיה — הכתבה המלאה נפתחת בלחיצה */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-card-meta {
+    color: #B8860B;
+    font-size: 14px;
+    text-align: left;
+    margin-top: auto;
+    padding-top: 15px;
+    font-weight: bold;
+}
+
+/* תג קטגוריה קטן על הכרטיסיה */
+.article-badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: linear-gradient(135deg, #D4AF37, #B8860B);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+/* ---------- מצב ריק (אין כתבות עדיין) ---------- */
+.article-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #8B7355;
+    font-size: 20px;
+    padding: 40px;
+    background: rgba(245, 245, 220, 0.6);
+    border: 2px dashed #D4AF37;
+    border-radius: 20px;
+}
+
+/* ---------- תצוגת כתבה מלאה ---------- */
+.article-full-view {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 40px;
+    background: linear-gradient(135deg, #F5F5DC 0%, #F0F0E6 50%, #E8E8D8 100%);
+    border: 3px solid #D4AF37;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.3);
+    text-align: right;
+}
+
+.article-full-title {
+    color: #D4AF37;
+    font-size: 40px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.3);
+}
+
+.article-full-meta {
+    color: #B8860B;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.article-full-body {
+    color: #333333;
+    font-size: 20px;
+    line-height: 1.9;
+}
+
+.article-full-body p {
+    margin-bottom: 18px;
+}
+
+.article-full-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.article-full-images img {
+    width: 100%;
+    border: 3px solid #D4AF37;
+    border-radius: 12px;
+    cursor: zoom-in;
+    display: block;
+}
+
+/* כפתור חזרה */
+.back-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #8B7355, #6B5344);
+    color: #F5F5DC;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.back-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- רספונסיביות למובייל ---------- */
+@media (max-width: 600px) {
+    .box-title {
+        font-size: 26px;
+        padding: 14px;
+    }
+
+    .article-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .article-card {
+        padding: 20px;
+    }
+
+    .article-card-title {
+        font-size: 22px;
+    }
+
+    .article-full-view {
+        padding: 22px;
+        margin: 15px 10px;
+    }
+
+    .article-full-title {
+        font-size: 28px;
+    }
+
+    .article-full-body {
+        font-size: 18px;
+    }
+}
+
+/* ============================================================
+   מדור גלריה — בסגנון כותרות חדשותיות: גופן כבד ובולט (Heebo 900)
+   ============================================================ */
+
+/* כותרת העמוד "גלריה" */
+.gallery-page-title {
+    color: #000000;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 4em;
+    font-weight: 900;
+    font-family: 'Heebo', 'Arial Black', sans-serif;
+    letter-spacing: 3px;
+}
+
+/* רשת כרטיסי האירועים */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 20px auto;
+    max-width: 95%;
+}
+
+/* כרטיסיית אירוע בודדת */
+.gallery-card {
+    background: #F5F5DC;
+    border: none;
+    border-radius: 0px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-card-image {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.gallery-card-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0px;
+    border: 3px solid #D4AF37;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+/* הכותרת — בגופן הכבד בסגנון עיתוני, כמו באתרי החדשות */
+.gallery-card-title {
+    font-family: 'Heebo', 'Arial Black', sans-serif;
+    font-weight: 900;
+    color: #1F1F1F;
+    font-size: 30px;
+    line-height: 1.35;
+    margin: 0 0 12px 0;
+    text-align: center;
+}
+
+.gallery-card-date {
+    color: #B8860B;
+    font-size: 22px;
+    margin-bottom: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.gallery-card-teaser {
+    color: #333333;
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.gallery-card-btn {
+    margin-top: auto;
+    background: linear-gradient(135deg, #8B7355, #6B5344);
+    color: #F5F5DC;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-family: inherit;
+}
+
+/* מצב ריק */
+.gallery-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #8B7355;
+    font-size: 20px;
+    padding: 40px;
+    background: rgba(245, 245, 220, 0.6);
+    border: 2px dashed #D4AF37;
+    border-radius: 20px;
+}
+
+/* ---------- תצוגת אירוע מלא — בסגנון כתבת חדשות: ללא מסגרות, ללא רקע ---------- */
+.gallery-full-view {
+    max-width: 860px;
+    margin: 30px auto;
+    padding: 0 20px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: right;
+}
+
+.gallery-full-title {
+    font-family: 'Heebo', 'Arial Black', sans-serif;
+    font-weight: 900;
+    color: #111111;
+    font-size: 48px;
+    line-height: 1.25;
+    text-align: right;
+    margin: 0 0 10px 0;
+}
+
+.gallery-full-date {
+    color: #B8860B;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+/* כפתור קישור למקור הכתבה */
+.gallery-full-source {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 30px auto;
+    background: linear-gradient(45deg, #B8860B, #D4AF37, #B8860B);
+    color: #FFFFFF;
+    padding: 20px 35px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 20px rgba(184, 134, 11, 0.4);
+    border: 2px solid #FFFFFF;
+    text-align: center;
+}
+
+.gallery-full-source:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 12px 25px rgba(184, 134, 11, 0.5);
+}
+
+.gallery-full-body {
+    color: #1F1F1F;
+    font-size: 22px;
+    line-height: 1.9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.gallery-full-body p {
+    margin-bottom: 20px;
+}
+
+/* סרטון מוטמע */
+.gallery-video {
+    width: 100%;
+    margin: 25px 0;
+}
+
+.gallery-video iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    display: block;
+}
+
+/* תמונות האירוע — כל תמונה ברוחב מלא וללא מסגרת */
+.gallery-full-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 25px 0;
+    border: none;
+    border-radius: 0;
+    cursor: zoom-in;
+}
+
+/* ---------- לייטבוקס (הגדלת תמונה) ---------- */
+.gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    cursor: zoom-out;
+    padding: 30px;
+}
+
+.gallery-lightbox img {
+    max-width: 92%;
+    max-height: 92%;
+    border: 4px solid #D4AF37;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- רספונסיביות ---------- */
+@media (max-width: 600px) {
+    .gallery-page-title {
+        font-size: 2.4em;
+    }
+
+    .gallery-full-title {
+        font-size: 32px;
+    }
+
+    .gallery-card-title {
+        font-size: 24px;
+    }
+
+    .gallery-full-view {
+        padding: 0 15px;
+        margin: 15px 10px;
+    }
+
+    .gallery-full-body {
+        font-size: 19px;
+    }
+
+    .gallery-video iframe {
+        height: 320px;
+    }
+}

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ממשק ניהול גלריה — איגוד עמלים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<!-- משתמשים באותו עיצוב של האתר כדי שהתצוגה המקדימה תהיה זהה לחלוטין -->
+<link rel="stylesheet" href="css/site.css">
+<style>
+    /* ---------- עיצוב כללי של מסך הניהול ---------- */
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        font-family: 'Heebo', Arial, sans-serif;
+        background: linear-gradient(135deg, #FAFAF0 0%, #F0F0E6 100%);
+        color: #333333;
+        min-height: 100vh;
+    }
+
+    /* ---------- סרגל עליון ---------- */
+    .admin-topbar {
+        background: linear-gradient(135deg, #8B7355, #6B5344);
+        color: #F5F5DC;
+        padding: 18px 30px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .admin-topbar h1 {
+        margin: 0;
+        font-size: 26px;
+        flex: 1;
+        min-width: 220px;
+    }
+
+    .topbar-btn {
+        background: linear-gradient(135deg, #D4AF37, #B8860B);
+        color: #FFFFFF;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .topbar-btn:hover { transform: scale(1.05); }
+
+    .topbar-btn.secondary {
+        background: transparent;
+        border: 2px solid #F5F5DC;
+        color: #F5F5DC;
+    }
+
+    /* ---------- הודעת הסבר ---------- */
+    .admin-note {
+        max-width: 1400px;
+        margin: 20px auto 0;
+        padding: 18px 25px;
+        background: rgba(212, 175, 55, 0.12);
+        border: 2px solid #D4AF37;
+        border-radius: 15px;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .admin-note b { color: #B8860B; }
+
+    /* ---------- פריסה דו-טורית ---------- */
+    .admin-layout {
+        max-width: 1400px;
+        margin: 20px auto 60px;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 25px;
+        align-items: start;
+    }
+
+    @media (max-width: 1000px) {
+        .admin-layout { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+        background: #FFFFFF;
+        border: 2px solid #D4AF37;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+    }
+
+    .panel h2 {
+        margin: 0 0 20px;
+        color: #B8860B;
+        font-size: 24px;
+        border-bottom: 2px solid #D4AF37;
+        padding-bottom: 10px;
+    }
+
+    /* ---------- שדות טופס ---------- */
+    .field { margin-bottom: 18px; }
+
+    .field label {
+        display: block;
+        font-weight: bold;
+        color: #8B7355;
+        margin-bottom: 6px;
+        font-size: 16px;
+    }
+
+    .field input[type="text"],
+    .field textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #D4AF37;
+        border-radius: 12px;
+        font-size: 17px;
+        font-family: inherit;
+        background: #FDFDF5;
+        transition: border-color 0.3s ease;
+    }
+
+    .field input[type="text"]:focus,
+    .field textarea:focus {
+        outline: none;
+        border-color: #B8860B;
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+
+    .field textarea {
+        min-height: 200px;
+        resize: vertical;
+        line-height: 1.7;
+    }
+
+    .field .hint {
+        font-size: 13px;
+        color: #999999;
+        margin-top: 4px;
+    }
+
+    /* שדות מקור וסרטון — זה לצד זה */
+    .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    @media (max-width: 700px) {
+        .field-row { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- אזור גרירת תמונות ---------- */
+    .dropzone {
+        border: 3px dashed #D4AF37;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        color: #8B7355;
+        font-size: 17px;
+        cursor: pointer;
+        background: #FDFDF5;
+        transition: all 0.3s ease;
+    }
+
+    .dropzone.dragover {
+        background: rgba(212, 175, 55, 0.15);
+        border-color: #B8860B;
+        transform: scale(1.01);
+    }
+
+    .dropzone .dz-icon { font-size: 40px; display: block; margin-bottom: 8px; }
+
+    .image-thumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .thumb {
+        position: relative;
+        width: 110px;
+        height: 110px;
+        border: 3px solid #D4AF37;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #F0F0E6;
+    }
+
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .thumb .thumb-remove {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        background: rgba(200, 0, 0, 0.85);
+        color: #FFFFFF;
+        border: none;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .thumb .thumb-main {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: rgba(139, 115, 85, 0.9);
+        color: #FFFFFF;
+        font-size: 11px;
+        text-align: center;
+        padding: 3px;
+    }
+
+    .url-add-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .url-add-row input { flex: 1; }
+
+    .url-add-row button {
+        background: linear-gradient(135deg, #8B7355, #6B5344);
+        color: #F5F5DC;
+        border: none;
+        border-radius: 12px;
+        padding: 0 20px;
+        font-size: 15px;
+        font-weight: bold;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    /* ---------- כפתורי פעולה בטופס ---------- */
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #D4AF37, #B8860B);
+        color: #FFFFFF;
+        border: none;
+        padding: 14px 32px;
+        border-radius: 25px;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: inherit;
+        cursor: pointer;
+        box-shadow: 0 6px 12px rgba(212, 175, 55, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover { transform: scale(1.04); }
+
+    .btn-cancel {
+        background: #EEEEEE;
+        color: #666666;
+        border: none;
+        padding: 14px 26px;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    /* ---------- תצוגה מקדימה ---------- */
+    .preview-toggle {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 18px;
+    }
+
+    .preview-toggle button {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #D4AF37;
+        background: #FDFDF5;
+        color: #8B7355;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: bold;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .preview-toggle button.active {
+        background: linear-gradient(135deg, #D4AF37, #B8860B);
+        color: #FFFFFF;
+    }
+
+    #preview-area { pointer-events: none; } /* התצוגה המקדימה לא לחיצה */
+
+    #preview-area .gallery-card { max-width: 400px; margin: 0 auto; }
+
+    #preview-area .gallery-full-view { margin: 0; padding: 25px; }
+
+    #preview-area .gallery-full-title { font-size: 30px; }
+
+    #preview-area .gallery-full-body { font-size: 18px; }
+
+    /* ---------- רשימת האירועים ---------- */
+    .gallery-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        border: 2px solid #EEE5C8;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        background: #FDFDF5;
+        transition: border-color 0.3s ease;
+    }
+
+    .gallery-row:hover { border-color: #D4AF37; }
+
+    .gallery-row .row-info { flex: 1; min-width: 0; }
+
+    .gallery-row .row-title {
+        font-weight: bold;
+        color: #6B5344;
+        font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .gallery-row .row-date { font-size: 13px; color: #B8860B; }
+
+    .gallery-row button {
+        border: none;
+        background: #F0F0E6;
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .gallery-row button:hover { background: #E8E0C0; }
+
+    .gallery-row button.row-delete:hover { background: #FFD5D5; }
+
+    .empty-list {
+        text-align: center;
+        color: #8B7355;
+        padding: 25px;
+        font-size: 16px;
+    }
+
+    /* ---------- הודעת שמירה קופצת ---------- */
+    .toast {
+        position: fixed;
+        bottom: 25px;
+        right: 50%;
+        transform: translateX(50%) translateY(120px);
+        background: linear-gradient(135deg, #D4AF37, #B8860B);
+        color: #FFFFFF;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 15px 35px;
+        border-radius: 30px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        transition: transform 0.4s ease;
+        z-index: 999;
+    }
+
+    .toast.show { transform: translateX(50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ==================== סרגל עליון ==================== -->
+<header class="admin-topbar">
+    <h1>🖼️ ממשק ניהול גלריה — איגוד עמלים</h1>
+    <button class="topbar-btn" onclick="saveAll()">💾 שמור שינויים</button>
+    <button class="topbar-btn secondary" onclick="downloadDataFile()">⬇️ הורד קובץ לאתר</button>
+    <button class="topbar-btn secondary" onclick="document.getElementById('import-file').click()">📂 ייבוא קובץ</button>
+    <button class="topbar-btn secondary" onclick="resetAll()">↺ איפוס</button>
+    <input type="file" id="import-file" accept=".js,.json" style="display:none" onchange="importDataFile(event)">
+</header>
+
+<!-- ==================== הסבר למשתמש ==================== -->
+<div class="admin-note">
+    <b>איך זה עובד?</b> ממלאים כותרת, תאריך ומלל, גוררים תמונות של האירוע, ורואים תצוגה מקדימה חיה משמאל.
+    לוחצים <b>"שמור שינויים"</b> — והאירוע מופיע מיד באתר <u>בדפדפן הזה</u>.
+    כדי שהאירוע יופיע לכל הגולשים: לוחצים <b>"הורד קובץ לאתר"</b>, ומעלים את הקובץ שהתקבל
+    לשרת בתיקייה <b>data/</b> במקום הקובץ הקיים (galleries-data.js).
+</div>
+
+<!-- ==================== אזור העבודה ==================== -->
+<div class="admin-layout">
+
+    <!-- ========== טור ימין: טופס העריכה + רשימת האירועים ========== -->
+    <div>
+        <div class="panel">
+            <h2 id="form-title">➕ אירוע חדש</h2>
+
+            <div class="field">
+                <label for="f-title">כותרת האירוע</label>
+                <input type="text" id="f-title" placeholder="לדוגמה: כינוס הכנה לקבלת התורה" oninput="updatePreview()">
+                <div class="hint">הכותרת מוצגת בגופן כבד ובולט בסגנון חדשותי</div>
+            </div>
+
+            <div class="field">
+                <label for="f-date">תאריך / פרשה</label>
+                <input type="text" id="f-date" placeholder='לדוגמה: מוצאי זאת חנוכה תשפ"ד' oninput="updatePreview()">
+            </div>
+
+            <div class="field">
+                <label for="f-teaser">תיאור קצר (מוצג בכרטיסייה)</label>
+                <input type="text" id="f-teaser" placeholder="משפט אחד שמתאר את האירוע" oninput="updatePreview()">
+            </div>
+
+            <div class="field">
+                <label for="f-body">מלל מלא של האירוע</label>
+                <textarea id="f-body" placeholder="כתבו כאן את הסיקור המלא. שורה ריקה מפרידה בין פסקאות..." oninput="updatePreview()"></textarea>
+            </div>
+
+            <div class="field">
+                <label>תמונות האירוע (אפשר לגרור לכאן ישירות מהמחשב)</label>
+                <div class="dropzone" id="dropzone">
+                    <span class="dz-icon">📸</span>
+                    גררו תמונות לכאן, או לחצו לבחירה מהמחשב<br>
+                    <small>התמונה הראשונה משמשת כתמונת הכיסוי של האירוע</small>
+                </div>
+                <input type="file" id="image-file" accept="image/*" multiple style="display:none">
+                <div class="image-thumbs" id="image-thumbs"></div>
+                <div class="url-add-row">
+                    <input type="text" id="image-url" placeholder="או הדביקו כתובת/נתיב תמונה (למשל: assets/uploads/files/תמונה.jpg)">
+                    <button onclick="addImageFromUrl()">הוסף</button>
+                </div>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="f-source-name">שם המקור (אופציונלי)</label>
+                    <input type="text" id="f-source-name" placeholder='לדוגמה: כותל המזרח' oninput="updatePreview()">
+                </div>
+                <div class="field">
+                    <label for="f-source-url">קישור לכתבה המלאה (אופציונלי)</label>
+                    <input type="text" id="f-source-url" placeholder="https://..." oninput="updatePreview()">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="f-video">קישור סרטון יוטיוב להטמעה (אופציונלי)</label>
+                <input type="text" id="f-video" placeholder="https://www.youtube.com/embed/..." oninput="updatePreview()">
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-primary" onclick="saveGalleryFromForm()">✔ שמור אירוע</button>
+                <button class="btn-cancel" onclick="clearForm()">נקה טופס</button>
+            </div>
+        </div>
+
+        <!-- ========== רשימת האירועים הקיימים ========== -->
+        <div class="panel" style="margin-top: 25px;">
+            <h2>📋 האירועים הקיימים</h2>
+            <div id="galleries-list"></div>
+        </div>
+    </div>
+
+    <!-- ========== טור שמאל: תצוגה מקדימה ========== -->
+    <div class="panel" style="position: sticky; top: 100px;">
+        <h2>👁️ תצוגה מקדימה חיה</h2>
+        <div class="preview-toggle">
+            <button id="pt-card" class="active" onclick="setPreviewMode('card')">תצוגת כרטיסייה</button>
+            <button id="pt-full" onclick="setPreviewMode('full')">תצוגת אירוע מלא</button>
+        </div>
+        <div id="preview-area"></div>
+    </div>
+</div>
+
+<!-- ==================== הודעת שמירה ==================== -->
+<div class="toast" id="toast">השינויים נשמרו ✓</div>
+
+<!-- קובץ הנתונים + מנוע הרינדור (אותם קבצים של האתר עצמו) -->
+<script src="data/galleries-data.js"></script>
+<script src="js/galleries.js"></script>
+<script>
+/* ============================================================
+   הלוגיקה של ממשק ניהול הגלריה
+   ============================================================ */
+
+// כל האירועים בזיכרון (מתחילים מהנתונים של האתר או מהגיבוי המקומי)
+var galleries = AMALIM_GALLERY.getGalleries();
+
+// מזהה האירוע שנמצא כרגע בעריכה (null = אירוע חדש)
+var editingId = null;
+
+// התמונות של האירוע הנוכחי בטופס
+var currentImages = [];
+
+// מצב התצוגה המקדימה: 'card' או 'full'
+var previewMode = 'card';
+
+/* ---------- שמירה וטעינה ---------- */
+
+function saveAll(silent) {
+    AMALIM_GALLERY.saveGalleries(galleries);
+    if (!silent) showToast('השינויים נשמרו ✓');
+}
+
+function showToast(message) {
+    var toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(function () { toast.classList.remove('show'); }, 2200);
+}
+
+/* ---------- הטופס ---------- */
+
+function readForm() {
+    return {
+        id: editingId || ('gal-' + Date.now()),
+        title: document.getElementById('f-title').value.trim(),
+        date: document.getElementById('f-date').value.trim(),
+        teaser: document.getElementById('f-teaser').value.trim(),
+        body: document.getElementById('f-body').value,
+        images: currentImages.slice(),
+        sourceName: document.getElementById('f-source-name').value.trim(),
+        sourceUrl: document.getElementById('f-source-url').value.trim(),
+        videoUrl: document.getElementById('f-video').value.trim()
+    };
+}
+
+function saveGalleryFromForm() {
+    var gallery = readForm();
+
+    if (!gallery.title) {
+        alert('צריך למלא כותרת לאירוע');
+        return;
+    }
+
+    if (editingId) {
+        for (var i = 0; i < galleries.length; i++) {
+            if (galleries[i].id === editingId) { galleries[i] = gallery; break; }
+        }
+        showToast('האירוע עודכן ✓');
+    } else {
+        galleries.push(gallery);
+        showToast('האירוע נוסף ✓');
+    }
+
+    saveAll(true);
+    clearForm();
+    renderList();
+}
+
+function editGallery(id) {
+    var gallery = galleries.filter(function (g) { return g.id === id; })[0];
+    if (!gallery) return;
+
+    editingId = id;
+    currentImages = (gallery.images || []).slice();
+
+    document.getElementById('f-title').value = gallery.title || '';
+    document.getElementById('f-date').value = gallery.date || '';
+    document.getElementById('f-teaser').value = gallery.teaser || '';
+    document.getElementById('f-body').value = gallery.body || '';
+    document.getElementById('f-source-name').value = gallery.sourceName || '';
+    document.getElementById('f-source-url').value = gallery.sourceUrl || '';
+    document.getElementById('f-video').value = gallery.videoUrl || '';
+
+    document.getElementById('form-title').textContent = '✏️ עריכת אירוע';
+    renderThumbs();
+    updatePreview();
+
+    document.getElementById('form-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function clearForm() {
+    editingId = null;
+    currentImages = [];
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-date').value = '';
+    document.getElementById('f-teaser').value = '';
+    document.getElementById('f-body').value = '';
+    document.getElementById('f-source-name').value = '';
+    document.getElementById('f-source-url').value = '';
+    document.getElementById('f-video').value = '';
+    document.getElementById('form-title').textContent = '➕ אירוע חדש';
+    renderThumbs();
+    updatePreview();
+}
+
+function deleteGallery(id) {
+    var gallery = galleries.filter(function (g) { return g.id === id; })[0];
+    if (!gallery) return;
+    if (!confirm('למחוק את האירוע "' + gallery.title + '"?')) return;
+
+    galleries = galleries.filter(function (g) { return g.id !== id; });
+    if (editingId === id) clearForm();
+    saveAll(true);
+    renderList();
+    showToast('האירוע נמחק');
+}
+
+// הזזת אירוע למעלה/למטה ברשימה
+function moveGallery(id, direction) {
+    var index = -1;
+    for (var i = 0; i < galleries.length; i++) if (galleries[i].id === id) { index = i; break; }
+    if (index < 0) return;
+
+    var j = direction === 'up' ? index - 1 : index + 1;
+    if (j < 0 || j >= galleries.length) return;
+
+    var temp = galleries[index];
+    galleries[index] = galleries[j];
+    galleries[j] = temp;
+
+    saveAll(true);
+    renderList();
+}
+
+/* ---------- ניהול תמונות ---------- */
+
+var dropzone = document.getElementById('dropzone');
+var imageFileInput = document.getElementById('image-file');
+
+dropzone.addEventListener('click', function () { imageFileInput.click(); });
+
+imageFileInput.addEventListener('change', function (e) {
+    handleImageFiles(e.target.files);
+    e.target.value = '';
+});
+
+['dragenter', 'dragover'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+        e.preventDefault();
+        dropzone.classList.add('dragover');
+    });
+});
+
+['dragleave', 'drop'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+    });
+});
+
+dropzone.addEventListener('drop', function (e) {
+    handleImageFiles(e.dataTransfer.files);
+});
+
+// קליטת קבצי תמונה — עם הקטנה אוטומטית כדי לא להכביד על האתר
+function handleImageFiles(files) {
+    Array.prototype.forEach.call(files, function (file) {
+        if (!file.type || file.type.indexOf('image/') !== 0) return;
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            shrinkImage(e.target.result, function (smallDataUrl) {
+                currentImages.push(smallDataUrl);
+                renderThumbs();
+                updatePreview();
+            });
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+// הקטנת תמונה לרוחב מקסימלי של 1400px ושמירה כ-JPEG איכותי
+function shrinkImage(dataUrl, callback) {
+    var img = new Image();
+    img.onload = function () {
+        var MAX_WIDTH = 1400;
+        if (img.width <= MAX_WIDTH) { callback(dataUrl); return; }
+
+        var scale = MAX_WIDTH / img.width;
+        var canvas = document.createElement('canvas');
+        canvas.width = MAX_WIDTH;
+        canvas.height = Math.round(img.height * scale);
+
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        callback(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = function () { callback(dataUrl); };
+    img.src = dataUrl;
+}
+
+function addImageFromUrl() {
+    var input = document.getElementById('image-url');
+    var url = input.value.trim();
+    if (!url) return;
+    currentImages.push(url);
+    input.value = '';
+    renderThumbs();
+    updatePreview();
+}
+
+function removeImage(index) {
+    currentImages.splice(index, 1);
+    renderThumbs();
+    updatePreview();
+}
+
+function renderThumbs() {
+    var container = document.getElementById('image-thumbs');
+    container.innerHTML = currentImages.map(function (src, i) {
+        var mainLabel = i === 0 ? '<span class="thumb-main">תמונת כיסוי</span>' : '';
+        return '<div class="thumb">' +
+               '<img src="' + src + '" alt="">' +
+               '<button class="thumb-remove" onclick="removeImage(' + i + ')" title="הסרה">✕</button>' +
+               mainLabel +
+               '</div>';
+    }).join('');
+}
+
+/* ---------- רשימת האירועים ---------- */
+
+function renderList() {
+    var container = document.getElementById('galleries-list');
+
+    if (galleries.length === 0) {
+        container.innerHTML = '<div class="empty-list">אין אירועים להצגה</div>';
+        return;
+    }
+
+    container.innerHTML = galleries.map(function (g) {
+        return '<div class="gallery-row">' +
+               '<div class="row-info">' +
+               '<div class="row-title">' + escapeHtml(g.title) + '</div>' +
+               '<div class="row-date">' + escapeHtml(g.date || '') + '</div>' +
+               '</div>' +
+               '<button onclick="moveGallery(\'' + g.id + '\', \'up\')" title="הזזה למעלה">⬆️</button>' +
+               '<button onclick="moveGallery(\'' + g.id + '\', \'down\')" title="הזזה למטה">⬇️</button>' +
+               '<button onclick="editGallery(\'' + g.id + '\')" title="עריכה">✏️</button>' +
+               '<button class="row-delete" onclick="deleteGallery(\'' + g.id + '\')" title="מחיקה">🗑️</button>' +
+               '</div>';
+    }).join('');
+}
+
+function escapeHtml(str) {
+    return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* ---------- תצוגה מקדימה חיה ---------- */
+
+function setPreviewMode(mode) {
+    previewMode = mode;
+    document.getElementById('pt-card').classList.toggle('active', mode === 'card');
+    document.getElementById('pt-full').classList.toggle('active', mode === 'full');
+    updatePreview();
+}
+
+function updatePreview() {
+    var area = document.getElementById('preview-area');
+    var gallery = readForm();
+
+    if (!gallery.title && !gallery.body && currentImages.length === 0) {
+        area.innerHTML = '<div class="gallery-empty">התצוגה המקדימה תופיע כאן תוך כדי כתיבה…</div>';
+        return;
+    }
+
+    if (previewMode === 'card') {
+        area.innerHTML = AMALIM_GALLERY.renderCardHtml(gallery);
+    } else {
+        // תצוגת אירוע מלאה — אותו מבנה בדיוק כמו באתר (בלי כפתור חזרה)
+        area.innerHTML = AMALIM_GALLERY.renderFullHtml(gallery, { withBackButton: false });
+    }
+}
+
+/* ---------- ייצוא וייבוא ---------- */
+
+function downloadDataFile() {
+    saveAll(true);
+
+    var header = '/* קובץ נתוני הגלריה — נוצר מממשק הניהול. להעלאה לשרת בתיקיית data/ */\n';
+    var content = header + 'window.AMALIM_GALLERIES = ' + JSON.stringify(galleries, null, 2) + ';\n';
+
+    var blob = new Blob([content], { type: 'text/javascript;charset=utf-8' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'galleries-data.js';
+    link.click();
+    URL.revokeObjectURL(link.href);
+
+    showToast('הקובץ הורד — העלו אותו לשרת בתיקיית data/');
+}
+
+function importDataFile(event) {
+    var file = event.target.files[0];
+    if (!file) return;
+
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var text = e.target.result;
+        var parsed = null;
+
+        try { parsed = JSON.parse(text); } catch (err) { /* ממשיכים */ }
+
+        if (!parsed) {
+            var start = text.indexOf('[');
+            var end = text.lastIndexOf(']');
+            if (start >= 0 && end > start) {
+                try { parsed = JSON.parse(text.slice(start, end + 1)); } catch (err) { /* נכשל */ }
+            }
+        }
+
+        if (!Array.isArray(parsed)) {
+            alert('לא הצלחתי לקרוא את הקובץ. ודאו שזהו קובץ הנתונים של הגלריה.');
+            return;
+        }
+
+        galleries = parsed;
+        saveAll(true);
+        renderList();
+        clearForm();
+        showToast('הקובץ יובא בהצלחה ✓');
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+function resetAll() {
+    if (!confirm('לאפס את כל השינויים המקומיים ולחזור לנתונים המקוריים של האתר?')) return;
+    localStorage.removeItem(AMALIM_GALLERY.STORAGE_KEY);
+    galleries = (window.AMALIM_GALLERIES || []).slice();
+    renderList();
+    clearForm();
+    showToast('אופס לנתונים המקוריים');
+}
+
+/* ---------- אתחול המסך ---------- */
+
+renderList();
+updatePreview();
+</script>
+</body>
+</html>
