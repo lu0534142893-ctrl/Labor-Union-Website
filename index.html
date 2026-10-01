@@ -6412,6 +6412,11 @@
             }
 
             function getGalleries() {
+                // מקור האמת: הנתונים המוטמעים בקובץ עצמו — מתעדכנים בכל פרסום מהניהול.
+                // הגיבוי המקומי (localStorage) נקרא רק אם הקובץ נטען בלי נתונים — כדי שגיבוי
+                // ישן שנשמר בממשק הניהול לא יסתיר כתבות שפורסמו בפועל.
+                var published = window.AMALIM_GALLERIES;
+                if (Array.isArray(published) && published.length > 0) return published;
                 try {
                     var saved = localStorage.getItem(STORAGE_KEY);
                     if (saved) {
@@ -6421,7 +6426,7 @@
                 } catch (e) {
                     console.warn('galleries: local backup read failed', e);
                 }
-                return window.AMALIM_GALLERIES || [];
+                return published || [];
             }
 
             function saveGalleries(galleries) {
