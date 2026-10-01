@@ -600,6 +600,7 @@ body {
     <button class="topbar-btn" onclick="saveAll()">💾 שמור שינויים</button>
     <button class="topbar-btn" onclick="buildSiteFile()">🌐 הפקת קובץ אתר מעודכן</button>
     <button class="topbar-btn secondary" onclick="document.getElementById('import-file').click()">📂 ייבוא אירועים</button>
+    <button class="topbar-btn secondary" onclick="importFromLiveSite()">☁️ ייבוא מהאתר החי</button>
     <button class="topbar-btn secondary" onclick="resetAll()">↺ איפוס</button>
     <input type="file" id="import-file" accept=".js,.json" style="display:none" onchange="importDataFile(event)">
 </header>
@@ -612,7 +613,7 @@ body {
     בסיום לוחצים <b>"🌐 הפקת קובץ אתר מעודכן"</b> — מתקבל קובץ <b>index.html</b> אחד שלם של האתר,
     מעלים אותו לשרת במקום הקובץ הקודם וזהו. <b>בלי גיטהאב ובלי קבצי נתונים.</b>
     אם אחרי העלאה האתר נראה לא מתעדכן — עשה ריענון מלא (Ctrl+F5) כדי לדלג על זיכרון הדפדפן.
-    הערה: כל האירועים נשמרים אוטומטית בדפדפן הזה; במחשב אחר — גררו את קובץ האתר ל"ייבוא אירועים".
+    הערה: כל האירועים נשמרים אוטומטית בדפדפן הזה; במחשב אחר — הממשק מסתנכרן אוטומטית עם הגרסה החיה באוויר, או לחצו "☁️ ייבוא מהאתר החי" בכל רגע.
 </div>
 
 <!-- ==================== אזור העבודה ==================== -->
@@ -1472,6 +1473,76 @@ function buildSiteFile() {
     showToast('קובץ האתר המעודכן הורד ✓ העלו אותו לשרת במקום הקובץ הקודם');
 }
 
+/* ---------- סנכרון מהאתר החי: משיכת האירועים העדכניים מהאוויר ---------- */
+
+var LIVE_SITE_URL = 'https://lu0534142893-ctrl.github.io/Labor-Union-Website/';
+
+function extractGalleriesFromHtml(text) {
+    var mStart = text.indexOf('window.AMALIM_GALLERIES = ');
+    if (mStart < 0) return null;
+    var arrStart = text.indexOf('[', mStart);
+    var mEnd = text.indexOf(']; }', arrStart);
+    if (arrStart < 0 || mEnd <= arrStart) return null;
+    try {
+        var parsed = JSON.parse(text.slice(arrStart, mEnd + 1));
+        return Array.isArray(parsed) ? parsed : null;
+    } catch (err) { return null; }
+}
+
+// כפתור "☁️ ייבוא מהאתר החי" — מביא את האירועים מהקובץ שמוצג כרגע לכולם באוויר
+function importFromLiveSite() {
+    if (!navigator.onLine) {
+        alert('אין חיבור לאינטרנט — בדקו את הרשת ונסו שוב.');
+        return;
+    }
+    showToast('טוען את הגרסה החיה מהאוויר…');
+    fetch(LIVE_SITE_URL + 'index.html', { cache: 'no-store' })
+        .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.text();
+        })
+        .then(function (text) {
+            var parsed = extractGalleriesFromHtml(text);
+            if (!parsed) throw new Error('no data block');
+            var replace = window.confirm(
+                'נטענו ' + parsed.length + ' אירועים מהאתר החי.\n\n' +
+                'אישור = להחליף את כל הרשימה המקומית בגרסה החיה (מומלץ).\n' +
+                'ביטול = להשאיר את הרשימה המקומית כפי שהיא.'
+            );
+            if (replace) {
+                galleries = parsed;
+                saveAll(true);
+                renderList();
+                clearForm();
+                showToast('האירועים מהאתר החי נטענו ✓');
+            }
+        })
+        .catch(function (err) {
+            console.warn('live sync failed', err);
+            alert('לא הצלחתי לטעון את הגרסה החיה מהאוויר.\nנסו שוב בעוד רגע, או גררו את קובץ האתר אל "ייבוא אירועים".');
+        });
+}
+
+// בפתיחת הממשק בסביבה חדשה (בלי עבודה מקומית שמורה) — מושכים בשקט את הגרסה החיה
+function syncWithLiveSiteIfPossible() {
+    try {
+        if (localStorage.getItem(STORAGE_KEY)) return; // יש עבודה מקומית שמורה — לא נוגעים
+    } catch (e) { /* ללא localStorage */ }
+    if (!navigator.onLine) return;
+    fetch(LIVE_SITE_URL + 'index.html', { cache: 'no-store' })
+        .then(function (res) { return res.ok ? res.text() : null; })
+        .then(function (text) {
+            if (!text) return;
+            var parsed = extractGalleriesFromHtml(text);
+            if (parsed && parsed.length > 0) {
+                galleries = parsed;
+                renderList();
+                showToast('הרשימה סונכרנה עם האתר החי ✓');
+            }
+        })
+        .catch(function () { /* שקט — עובדים עם הנתונים המוטמעים */ });
+}
+
 /* ---------- ייבוא ואיפוס ---------- */
 
 function importDataFile(event) {
@@ -1536,6 +1607,7 @@ renderList();
 renderThumbs();
 renderCardStrip();
 updatePreview();
+syncWithLiveSiteIfPossible();
 </script>
 </body>
 </html>
