@@ -80,11 +80,16 @@
         return html;
     }
 
-    // תצוגת אירוע מלאה — כותרת כבדה, מלל, סרטון וגלריית תמונות            function renderFullHtml(gallery, options) {
-                options = options || {};
-                var html = '<div class="gallery-full-view">';
+    // תצוגת אירוע מלאה — כותרת כבדה, מלל, סרטון וגלריית תמונות
+    function renderFullHtml(gallery, options) {
+        options = options || {};
+        var html = '<div class="gallery-full-view">';
 
-                html += '<h2 class="gallery-full-title">' + esc(gallery.title) + '</h2>';
+        if (options.withBackButton !== false) {
+            html += '<button class="back-btn" onclick="AMALIM_GALLERY.closeGallery()">→ חזרה לכל האירועים</button>';
+        }
+
+        html += '<h2 class="gallery-full-title">' + esc(gallery.title) + '</h2>';
 
         if (gallery.date) {
             html += '<p class="gallery-full-date">' + esc(gallery.date) + '</p>';
@@ -106,10 +111,6 @@
 
                 var lead = [];
                 var rest = [];
-
-                // כפתור «חזרה לכל האירועים» הוסר — החזרה לרשימת הגלריות נעשית עכשיו
-                // באמצעות חץ «הקודם» של הדפדפן (כמו בכל אתר רגיל).
-
                 var leadChars = 0;
                 for (var i = 0; i < paragraphs.length; i++) {
                     // פסקאות הפתיחה: עד 2 פסקאות או ~350 תווים
@@ -178,39 +179,20 @@
 
     /* ---------- פתיחה וסגירה של אירוע ---------- */
 
-    // האם כרטיסיית כתבה פתוחה כעת — לצורך סנכרון עם היסטוריית הדפדפן
-    var galleryHistoryOpen = false;
-
-    function renderGalleryIntoDom(gallery) {
+    function openGallery(id) {
+        var gallery = getGalleries().filter(function (g) { return g.id === id; })[0];
         var fullView = document.getElementById('gallery-full-view');
         var grid = document.getElementById('gallery-grid');
-        if (!gallery || !fullView) return false;
+        if (!gallery || !fullView) return;
 
         fullView.innerHTML = renderFullHtml(gallery);
         fullView.style.display = 'block';
         if (grid) grid.style.display = 'none';
 
         fullView.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return true;
     }
 
-    function openGallery(id) {
-        var gallery = getGalleries().filter(function (g) { return g.id === id; })[0];
-        if (!renderGalleryIntoDom(gallery)) return;
-
-        // רשומה חדשה בהיסטוריה — כדי שחיצי «הקודם» של הדפדפן יחזירו לרשימת הגלריות
-        try {
-            var state = { view: 'gallery-details', galleryId: id };
-            if (galleryHistoryOpen) {
-                history.replaceState(state, '', window.location.href);
-            } else {
-                history.pushState(state, '', window.location.href);
-            }
-            galleryHistoryOpen = true;
-        } catch (e) { /* דפדפן ישן מאוד — ממשיכים בלי היסטוריה */ }
-    }
-
-    function hideGalleryDom() {
+    function closeGallery() {
         var fullView = document.getElementById('gallery-full-view');
         var grid = document.getElementById('gallery-grid');
 
@@ -220,37 +202,6 @@
         }
         if (grid) grid.style.display = '';
     }
-
-    function closeGallery() {
-        var currentState = null;
-        try { currentState = history.state; } catch (e) { /* אין היסטוריה */ }
-
-        // אם הרשומה הנוכחית היא הכרטיסיה שפתחנו — מחזירים את הדפדפן אחורה,
-        // וה-popstate הוא שיסגור בפועל. כך ההיסטוריה נשארת עקבית.
-        if (galleryHistoryOpen && currentState && currentState.view === 'gallery-details') {
-            history.back();
-            return;
-        }
-
-        galleryHistoryOpen = false;
-        hideGalleryDom();
-    }
-
-    // חיצי «הקודם»/«הבא» של הדפדפן — סגירה ופתיחה מחדש של כרטיסיית הכתבה
-    window.addEventListener('popstate', function (event) {
-        var st = event.state;
-        if (st && st.view === 'gallery-details' && st.galleryId) {
-            var gallery = getGalleries().filter(function (g) { return g.id === st.galleryId; })[0];
-            if (gallery && renderGalleryIntoDom(gallery)) {
-                galleryHistoryOpen = true;
-                return;
-            }
-        }
-        if (galleryHistoryOpen) {
-            galleryHistoryOpen = false;
-            hideGalleryDom();
-        }
-    });
 
     /* ---------- לייטבוקס (הגדלת תמונה) ---------- */
 
