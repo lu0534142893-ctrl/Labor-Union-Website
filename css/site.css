@@ -370,6 +370,7 @@
     line-height: 1.25;
     text-align: right;
     margin: 0 0 10px 0;
+    scroll-margin-top: calc(8vh + 12px);
 }
 
 .gallery-full-date {
