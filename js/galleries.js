@@ -80,12 +80,13 @@
         return html;
     }
 
-    // תצוגת אירוע מלאה — כותרת כבדה, מלל, סרטון וגלריית תמונות            function renderFullHtml(gallery, options) {
+    // תצוגת אירוע מלאה — כותרת כבדה, מלל, סרטון וגלריית תמונות
+            function renderFullHtml(gallery, options) {
                 options = options || {};
                 var html = '<div class="gallery-full-view">';
 
                 var detailTitle = String(gallery.title || '')
-                    .replace(/גלר[יי']\b/g, '')
+                    .replace(/(?<![א-ת])גלרי[ה]?'?(?![א-ת])/g, '')
                     .replace(/\s{2,}/g, ' ')
                     .replace(/^ +/, '').replace(/ +$/, '');
                 html += '<h2 class="gallery-full-title">' + esc(detailTitle || gallery.title) + '</h2>';
@@ -110,9 +111,6 @@
 
                 var lead = [];
                 var rest = [];
-
-                // כפתור «חזרה לכל האירועים» הוסר — החזרה לרשימת הגלריות נעשית עכשיו
-                // באמצעות חץ «הקודם» של הדפדפן (כמו בכל אתר רגיל).
 
                 var leadChars = 0;
                 for (var i = 0; i < paragraphs.length; i++) {
